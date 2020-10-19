@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.15)
+
+link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+
+add_executable(abstractorizer main.cpp)
+add_dependencies(abstractorizer imguiqt)
+
+target_link_libraries(abstractorizer debug imguiqt.lib)
+target_link_libraries(abstractorizer optimized imguiqt.lib)
