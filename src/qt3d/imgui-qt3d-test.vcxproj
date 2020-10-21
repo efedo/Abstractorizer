@@ -187,16 +187,18 @@
     </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\imgui-qt3d\imguimanager.cpp" />
+    <ClCompile Include="..\imgui-qt3d\qt3d_imgui_manager.cpp" />
     <ClCompile Include="gui.cpp" />
-    <ClCompile Include="imguiqt3dwindow.cpp" />
+    <ClCompile Include="qt3d_imgui_window.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="..\imgui-qt3d\imguimanager.h" />
+    <QtMoc Include="..\imgui-qt3d\qt3d_imgui_manager.h" />
     <ClInclude Include="gui.h" />
-    <ClInclude Include="imguiqt3dwindow.h" />
+    <ClInclude Include="imgui_manager.h" />
+    <ClInclude Include="imgui_window.h" />
+    <ClInclude Include="qt3d_imgui_window.h" />
     <QtMoc Include="mainwindow.h">
     </QtMoc>
   </ItemGroup>

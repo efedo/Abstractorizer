@@ -1,58 +1,11 @@
-/****************************************************************************
-**
-** Copyright (C) 2017 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Original code from https://github.com/alpqr/imgui-qt3d
 
-#include "imguiqt3dwindow.h"
-#include "imguimanager.h"
+#include "qt3d_imgui_window.h"
+#include "qt3d_imgui_manager.h"
 #include "gui.h"
 #include <imgui.h>
 
+#include <QEntity>
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QImage>
@@ -82,32 +35,24 @@
 #include <QColorMask>
 #include <QScissorTest>
 #include <QFrameAction>
-
-#include <QEntity>
 #include <QRenderAspect>
 #include <QInputAspect>
 #include <QAnimationAspect>
 #include <QLogicAspect>
-
 #include <QRenderSettings>
 #include <QInputSettings>
 #include <QRenderSurfaceSelector>
 #include <QViewport>
 #include <QCameraSelector>
 #include <QClearBuffers>
-#include <QTechniqueFilter>
-#include <QFilterKey>
 #include <QNoDraw>
 #include <QLayerFilter>
-#include <QLayer>
 #include <QCamera>
 #include <QSortPolicy>
 #include <QGuiApplication>
 #include <QSurfaceFormat>
 #include <QOpenGLContext>
 #include <QPropertyAnimation>
-#include <QEntity>
-#include <QTransform>
 #include <QCuboidMesh>
 #include <QTorusMesh>
 #include <QSphereMesh>
@@ -149,11 +94,13 @@ private:
     Qt3DRender::QTextureImageDataGeneratorPtr m_gen;
 };
 
-ImguiManager::ImguiManager(ImguiQt3DWindow & parentWindow, Qt3DCore::QEntity & rootEntity, Gui & gui)
-    : _parentWindow(parentWindow), _rootEntity(rootEntity), _gui(gui)
+ImguiManagerQt3D::ImguiManagerQt3D(ImguiWindowQt3D & parentWindow, Qt3DCore::QEntity & rootEntity)
+    : _parentWindow(parentWindow), _rootEntity(rootEntity)
 {
+    _gui = new Gui(*this);
+
     Qt3DLogic::QFrameAction* frameUpdater = new Qt3DLogic::QFrameAction;
-    QObject::connect(frameUpdater, &Qt3DLogic::QFrameAction::triggered, this, &ImguiManager::updateFrame);
+    QObject::connect(frameUpdater, &Qt3DLogic::QFrameAction::triggered, this, &ImguiManagerQt3D::updateFrame);
     _rootEntity.addComponent(frameUpdater);
 
     ImGuiIO& io = ImGui::GetIO();
@@ -176,7 +123,7 @@ ImguiManager::ImguiManager(ImguiQt3DWindow & parentWindow, Qt3DCore::QEntity & r
     setupInputEventSource();
 }
 
-ImguiManager::OutputInfo ImguiManager::getOutputInfo() {
+ImguiManagerQt3D::OutputInfo ImguiManagerQt3D::getOutputInfo() {
     OutputInfo outputInfo;
     outputInfo.size = _parentWindow.size();
     outputInfo.dpr = _parentWindow.devicePixelRatio();
@@ -186,12 +133,12 @@ ImguiManager::OutputInfo ImguiManager::getOutputInfo() {
     return outputInfo;
 };
 
-void ImguiManager::pickTexSlot(Qt3DRender::QPickEvent* /*pickEvent*/) {
+void ImguiManagerQt3D::pickTexSlot(Qt3DRender::QPickEvent* /*pickEvent*/) {
     this->setEnabled(!isEnabled());
     toggleTextMat->setDiffuse(isEnabled() ? Qt::green : Qt::red);
 }
 
-void ImguiManager::createScene() {
+void ImguiManagerQt3D::createScene() {
 
     // Maybe should use _parent here instead of &_rootEntity
     Qt3DCore::QEntity* cube = new Qt3DCore::QEntity(&_rootEntity);
@@ -243,15 +190,15 @@ void ImguiManager::createScene() {
     toggleText->addComponent(toggleTextTrans);
     toggleText->addComponent(toggleTextMat);
     Qt3DRender::QObjectPicker* toggleTextPicker = new Qt3DRender::QObjectPicker;
-    QObject::connect(toggleTextPicker, &Qt3DRender::QObjectPicker::pressed, this, &ImguiManager::pickTexSlot);
-    //[toggleTextMat, &guiMgr](Qt3DRender::QPickEvent*) {
-    //guiMgr.setEnabled(!guiMgr.isEnabled());
-    //toggleTextMat->setDiffuse(guiMgr.isEnabled() ? Qt::green : Qt::red);
+    QObject::connect(toggleTextPicker, &Qt3DRender::QObjectPicker::pressed, this, &ImguiManagerQt3D::pickTexSlot);
+    //[toggleTextMat, &_guiMgr](Qt3DRender::QPickEvent*) {
+    //_guiMgr.setEnabled(!_guiMgr.isEnabled());
+    //toggleTextMat->setDiffuse(_guiMgr.isEnabled() ? Qt::green : Qt::red);
     //});
     toggleText->addComponent(toggleTextPicker);
 }
 
-void ImguiManager::updateFrame() {
+void ImguiManagerQt3D::updateFrame() {
     if (!m_enabled) return;
 
     m_outputInfo = getOutputInfo();
@@ -268,24 +215,24 @@ void ImguiManager::updateFrame() {
     // the Qt events have already been dispatched and processed.
 
     ImGui::NewFrame();
-    //guiMgr.setFrameFunc(std::bind(&Gui::frame, &gui, std::placeholders::_1));
-    _gui.frame(&_rootEntity);
+    //_guiMgr.setFrameFunc(std::bind(&Gui::frame, &gui, std::placeholders::_1));
+    _gui->frame(&_rootEntity);
     ImGui::Render();
 
     update3D();
 }
 
 // To be called when the Qt 3D scene goes down (and thus destroys the objects
-// ImguiManager references) but the ImguiManager instance will be reused later
+// ImguiManagerQt3D references) but the ImguiManagerQt3D instance will be reused later
 // on. Must be followed by a call to initialize().
-void ImguiManager::releaseResources()
+void ImguiManagerQt3D::releaseResources()
 {
     // assume that everything starting from our root entity is already gone
     rpd = SharedRenderPassData();
     m_cmdList.clear();
 }
 
-void ImguiManager::resizePool(CmdListEntry *e, int newSize)
+void ImguiManagerQt3D::resizePool(CmdListEntry *e, int newSize)
 {
     Q_ASSERT(m_outputInfo.guiTag && m_outputInfo.activeGuiTag);
 
@@ -329,7 +276,7 @@ void ImguiManager::resizePool(CmdListEntry *e, int newSize)
     e->activeSize = newSize;
 }
 
-void ImguiManager::updateGeometry(CmdListEntry *e, int idx, uint elemCount, int vertexCount, int indexCount, const void *indexOffset)
+void ImguiManagerQt3D::updateGeometry(CmdListEntry *e, int idx, uint elemCount, int vertexCount, int indexCount, const void *indexOffset)
 {
     Qt3DRender::QGeometryRenderer *gr = e->cmds[idx].geomRenderer;
     Qt3DRender::QGeometry *g = gr->geometry();
@@ -409,7 +356,7 @@ void ImguiManager::updateGeometry(CmdListEntry *e, int idx, uint elemCount, int 
 }
 
 // called once per frame, performs gui-related updates for the scene
-void ImguiManager::update3D()
+void ImguiManagerQt3D::update3D()
 {
     ImDrawData *d = ImGui::GetDrawData();
     ImGuiIO &io = ImGui::GetIO();
@@ -540,7 +487,7 @@ static const char *fragSrcGL3 =
         "    fragColor = color * texture(tex, uv);\n"
         "}\n";
 
-Qt3DRender::QMaterial *ImguiManager::buildMaterial(Qt3DRender::QScissorTest **scissor)
+Qt3DRender::QMaterial *ImguiManagerQt3D::buildMaterial(Qt3DRender::QScissorTest **scissor)
 {
     Qt3DRender::QMaterial *material = new Qt3DRender::QMaterial;
     Qt3DRender::QEffect *effect = new Qt3DRender::QEffect;
@@ -702,19 +649,20 @@ bool ImguiInputEventFilter::eventFilter(QObject *, QEvent *event)
     return false;
 }
 
-ImguiManager::~ImguiManager()
+ImguiManagerQt3D::~ImguiManagerQt3D()
 {
     delete m_inputEventFilter;
+    if (_gui) delete _gui;
 }
 
-void ImguiManager::setupInputEventSource()
+void ImguiManagerQt3D::setupInputEventSource()
 {
     if (m_inputEventFilter) _parentWindow.removeEventFilter(m_inputEventFilter);
     if (!m_inputEventFilter) m_inputEventFilter = new ImguiInputEventFilter;
     _parentWindow.installEventFilter(m_inputEventFilter);
 }
 
-void ImguiManager::updateInput()
+void ImguiManagerQt3D::updateInput()
 {
     if (!m_inputEventFilter)
         return;
@@ -774,7 +722,7 @@ void ImguiManager::updateInput()
     }
 }
 
-void ImguiManager::setEnabled(bool enabled)
+void ImguiManagerQt3D::setEnabled(bool enabled)
 {
     if (m_enabled == enabled)
         return;
@@ -788,7 +736,7 @@ void ImguiManager::setEnabled(bool enabled)
         m_inputEventFilter->enabled = m_enabled;
 }
 
-void ImguiManager::setScale(float scale)
+void ImguiManagerQt3D::setScale(float scale)
 {
     m_scale = scale;
 }

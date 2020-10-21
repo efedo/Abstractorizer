@@ -338,3 +338,11 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/out/build/x64-Debug (default)/.cmake/api/v1/reply
+/out/build/x64-Debug (default)/CMakeFiles
+/out/build/x64-Debug (default)/src
+/out/build/x64-Debug (default)/.ninja_deps
+/out/build/x64-Debug (default)/.ninja_log
+/out/build/x64-Debug (default)/build.ninja
+/out/build/x64-Debug (default)/cmake_install.cmake
+/out/build/x64-Debug (default)/rules.ninja

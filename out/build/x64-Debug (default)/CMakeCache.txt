@@ -217,7 +217,43 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 QT5_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
 
 //The directory containing a CMake configuration file for QT.
-QT_DIR:PATH=QT_DIR-NOTFOUND
+QT_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
+
+//The directory containing a CMake configuration file for Qt53DCore.
+Qt53DCore_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DCore
+
+//The directory containing a CMake configuration file for Qt53DExtras.
+Qt53DExtras_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DExtras
+
+//The directory containing a CMake configuration file for Qt53DInput.
+Qt53DInput_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DInput
+
+//The directory containing a CMake configuration file for Qt53DLogic.
+Qt53DLogic_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DLogic
+
+//The directory containing a CMake configuration file for Qt53DRender.
+Qt53DRender_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DRender
+
+//The directory containing a CMake configuration file for Qt5Core.
+Qt5Core_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Core
+
+//The directory containing a CMake configuration file for Qt5Gamepad.
+Qt5Gamepad_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Gamepad
+
+//The directory containing a CMake configuration file for Qt5Gui.
+Qt5Gui_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Gui
+
+//The directory containing a CMake configuration file for Qt5Network.
+Qt5Network_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Network
+
+//The directory containing a CMake configuration file for Qt5Widgets.
+Qt5Widgets_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Widgets
+
+//The directory containing a CMake configuration file for Qt5.
+Qt5_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
+
+//The directory containing a CMake configuration file for Qt.
+Qt_DIR:PATH=Qt_DIR-NOTFOUND
 
 //Automatically copy dependencies into the output directory for
 // executables.

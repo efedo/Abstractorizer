@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "imguiqt3dwindow.h"
+#include "qt3d_imgui_window.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // Setup widgets
-    ImguiQt3DWindow * w = new ImguiQt3DWindow;
+    ImguiWindowQt3D * w = new ImguiWindowQt3D;
     w->resize(1280, 720);
     QWidget * widget = QWidget::createWindowContainer(w);
     QGridLayout *layout_qt3d = new QGridLayout;

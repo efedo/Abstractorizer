@@ -1,61 +1,10 @@
-/****************************************************************************
-**
-** Copyright (C) 2017 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
-#include "imguiqt3dwindow.h"
+// Original code from https://github.com/alpqr/imgui-qt3d
 
 #include <QEntity>
 #include <QRenderAspect>
 #include <QInputAspect>
 #include <QAnimationAspect>
 #include <QLogicAspect>
-
 #include <QRenderSettings>
 #include <QInputSettings>
 #include <QRenderSurfaceSelector>
@@ -69,24 +18,13 @@
 #include <QLayer>
 #include <QCamera>
 #include <QSortPolicy>
-#include <QGuiApplication>
 #include <QSurfaceFormat>
 #include <QOpenGLContext>
-#include <QPropertyAnimation>
-#include <QEntity>
-#include <QTransform>
-#include <QCuboidMesh>
-#include <QTorusMesh>
-#include <QSphereMesh>
-#include <QPhongMaterial>
-#include <QObjectPicker>
-#include <QPickEvent>
 
-#include "gui.h"
-#include "imguimanager.h"
+#include "qt3d_imgui_window.h"
+#include "qt3d_imgui_manager.h"
 
-
-ImguiQt3DWindow::ImguiQt3DWindow()
+ImguiWindowQt3D::ImguiWindowQt3D()
 {
     setSurfaceType(QSurface::OpenGLSurface);
     createAspectEngine();
@@ -102,36 +40,32 @@ ImguiQt3DWindow::ImguiQt3DWindow()
     setFormat(fmt);
     createFramegraph();
 
-    gui = std::make_unique<Gui>();
-    guiMgr = std::make_unique<ImguiManager>(*this, *m_rootEntity, *gui.get());
-    gui->setManager(guiMgr.get());
-    guiMgr->createScene(); // Might have to move later
-    // uncomment to start with gui hidden
-    //guiMgr.setEnabled(false);
+    _guiMgr = std::make_unique<ImguiManagerQt3D>(*this, *m_rootEntity);
+    _guiMgr->createScene(); // Might have to move later
 }
 
-void ImguiQt3DWindow::createAspectEngine()
+void ImguiWindowQt3D::createAspectEngine()
 {
-    m_aspectEngine.reset(new Qt3DCore::QAspectEngine);
+    _aspectEngine.reset(new Qt3DCore::QAspectEngine);
     //Qt3DRender::QRenderAspect * naspect = new Qt3DRender::QRenderAspect(Qt3DRender::QRenderAspect::RenderType::Threaded);
     Qt3DRender::QRenderAspect * naspect = new Qt3DRender::QRenderAspect;
-    m_aspectEngine->registerAspect(naspect);
-    m_aspectEngine->registerAspect(new Qt3DInput::QInputAspect);
-    m_aspectEngine->registerAspect(new Qt3DAnimation::QAnimationAspect);
-    m_aspectEngine->registerAspect(new Qt3DLogic::QLogicAspect);
+    _aspectEngine->registerAspect(naspect);
+    _aspectEngine->registerAspect(new Qt3DInput::QInputAspect);
+    _aspectEngine->registerAspect(new Qt3DAnimation::QAnimationAspect);
+    _aspectEngine->registerAspect(new Qt3DLogic::QLogicAspect);
 }
 
-void ImguiQt3DWindow::exposeEvent(QExposeEvent *)
+void ImguiWindowQt3D::exposeEvent(QExposeEvent *)
 {
     static bool isRootSet = false;
     if (!m_rootEntity) createFramegraph();
     if (!isRootSet && isExposed()) {
-        m_aspectEngine->setRootEntity(Qt3DCore::QEntityPtr(m_rootEntity));
+        _aspectEngine->setRootEntity(Qt3DCore::QEntityPtr(m_rootEntity));
         isRootSet = true;
     }
 }
 
-void ImguiQt3DWindow::resizeEvent(QResizeEvent *)
+void ImguiWindowQt3D::resizeEvent(QResizeEvent *)
 {
     if (m_sceneCamera)
         m_sceneCamera->setAspectRatio(width() / float(height()));
@@ -142,7 +76,7 @@ void ImguiQt3DWindow::resizeEvent(QResizeEvent *)
     }
 }
 
-void ImguiQt3DWindow::createFramegraph()
+void ImguiWindowQt3D::createFramegraph()
 {
     m_rootEntity = new Qt3DCore::QEntity;
     m_rootEntity->setObjectName(QLatin1String("root"));

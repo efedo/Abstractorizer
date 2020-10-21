@@ -1,5 +1,5 @@
 #include "gui.h"
-#include "imguimanager.h"
+#include "qt3d_imgui_manager.h"
 #include <QPainter>
 #include <Qt3DCore/QEntity>
 #include <Qt3DRender/QTexture>
@@ -18,6 +18,11 @@ public:
     }
 };
 
+Gui::Gui(ImguiManagerQt3D& manager)
+    : m_manager(manager)
+{}
+
+
 void Gui::frame(Qt3DCore::QEntity *rootEntity)
 {
     // 1. Show a simple window
@@ -33,9 +38,9 @@ void Gui::frame(Qt3DCore::QEntity *rootEntity)
 
         // Add some extra content to exercise our Qt3D integration a bit.
         if (ImGui::Button("Scale up"))
-            m_manager->setScale(m_manager->scale() + 0.2f);
+            m_manager.setScale(m_manager.scale() + 0.2f);
         if (ImGui::Button("Scale down"))
-            m_manager->setScale(m_manager->scale() - 0.2f);
+            m_manager.setScale(m_manager.scale() - 0.2f);
 
         const QSize customImageSize(320, 200);
         if (!m_customTexture) {
