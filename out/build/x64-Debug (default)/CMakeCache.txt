@@ -213,11 +213,26 @@ CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=C:/Programming/lib/vcpkg/scripts/buildsystems
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Path to a file.
+MSVC_REDIST_DIR:PATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Redist/MSVC/14.27.29016
+
+//Path to a file.
+QT3_QGLOBAL_H_FILE:FILEPATH=QT3_QGLOBAL_H_FILE-NOTFOUND
+
+//Path to a file.
+QT4_QGLOBAL_H_FILE:FILEPATH=QT4_QGLOBAL_H_FILE-NOTFOUND
+
 //The directory containing a CMake configuration file for QT5.
 QT5_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
 
 //The directory containing a CMake configuration file for QT.
 QT_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
+
+//Path to a program.
+QT_QMAKE_EXECUTABLE_FINDQT:FILEPATH=C:/Qt/5.15.1/msvc2019_64/bin/qmake.exe
+
+//The directory containing a CMake configuration file for Qt53DAnimation.
+Qt53DAnimation_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DAnimation
 
 //The directory containing a CMake configuration file for Qt53DCore.
 Qt53DCore_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DCore
@@ -234,6 +249,12 @@ Qt53DLogic_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DLogic
 //The directory containing a CMake configuration file for Qt53DRender.
 Qt53DRender_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DRender
 
+//The directory containing a CMake configuration file for Qt5ANGLE.
+Qt5ANGLE_DIR:PATH=Qt5ANGLE_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for Qt5Concurrent.
+Qt5Concurrent_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Concurrent
+
 //The directory containing a CMake configuration file for Qt5Core.
 Qt5Core_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Core
 
@@ -246,8 +267,14 @@ Qt5Gui_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Gui
 //The directory containing a CMake configuration file for Qt5Network.
 Qt5Network_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Network
 
+//The directory containing a CMake configuration file for Qt5Platform.
+Qt5Platform_DIR:PATH=Qt5Platform_DIR-NOTFOUND
+
 //The directory containing a CMake configuration file for Qt5Widgets.
 Qt5Widgets_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Widgets
+
+//The directory containing a CMake configuration file for Qt5Windows.
+Qt5Windows_DIR:PATH=Qt5Windows_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for Qt5.
 Qt5_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
@@ -264,6 +291,12 @@ VCPKG_TARGET_TRIPLET:STRING=x64-windows
 
 //Enables messages from the VCPKG toolchain for debugging purposes.
 VCPKG_VERBOSE:BOOL=OFF
+
+//Path to a program.
+WINDEPLOYQT_EXECUTABLE:FILEPATH=C:/Qt/5.15.1/msvc2019_64/bin/windeployqt.exe
+
+//Path to a file.
+WINDOWS_KITS_DIR:PATH=C:/Program Files (x86)/Windows Kits/10
 
 //Path to a program.
 _VCPKG_CL:FILEPATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.27.29110/bin/Hostx64/x64/cl.exe
@@ -407,8 +440,18 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_TOOLCHAIN_FILE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MSVC_REDIST_DIR
+MSVC_REDIST_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT3_QGLOBAL_H_FILE
+QT3_QGLOBAL_H_FILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT4_QGLOBAL_H_FILE
+QT4_QGLOBAL_H_FILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT_QMAKE_EXECUTABLE_FINDQT
+QT_QMAKE_EXECUTABLE_FINDQT-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: VCPKG_VERBOSE
 VCPKG_VERBOSE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: WINDOWS_KITS_DIR
+WINDOWS_KITS_DIR-ADVANCED:INTERNAL=1
 //_vcpkg_get_directory_name_of_file_above: _VCPKG_ROOT_DIR
 _VCPKG_ROOT_DIR:INTERNAL=C:/Programming/lib/vcpkg
 

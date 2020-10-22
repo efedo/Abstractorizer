@@ -1,9 +1,14 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.10)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS 3DCore 3DExtras 3DRender 3DInput REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS 3DCore 3DExtras 3DRender 3DInput REQUIRED)
+#message(STATUS "Include directories for " ${CMAKE_CURRENT_SOURCE_DIR} " :")
+#get_directory_property(dirs INCLUDE_DIRECTORIES)
+#foreach(dir ${dirs})
+#  message(STATUS "dir='${dir}'")
+#endforeach()
 
 set(SOURCES 
     imgui/imgui_demo.cpp
@@ -17,4 +22,6 @@ set(SOURCES
     qt3d_imgui_window.cpp
 )
 
-add_library(qt3d ${SOURCES})
+foreach(CurrTargetType ${AllTargetTypes})
+    add_library(qt3d-${CurrTargetType} ${SOURCES})
+endforeach()

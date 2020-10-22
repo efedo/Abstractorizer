@@ -1,23 +1,23 @@
 // Original code from https://github.com/alpqr/imgui-qt3d
 
-#include <QEntity>
-#include <QRenderAspect>
-#include <QInputAspect>
-#include <QAnimationAspect>
-#include <QLogicAspect>
-#include <QRenderSettings>
-#include <QInputSettings>
-#include <QRenderSurfaceSelector>
-#include <QViewport>
-#include <QCameraSelector>
-#include <QClearBuffers>
-#include <QTechniqueFilter>
-#include <QFilterKey>
-#include <QNoDraw>
-#include <QLayerFilter>
-#include <QLayer>
-#include <QCamera>
-#include <QSortPolicy>
+#include <Qt3DCore/QEntity>
+#include <Qt3DRender/QRenderAspect>
+#include <Qt3DInput/QInputAspect>
+#include <Qt3DAnimation/QAnimationAspect>
+#include <Qt3DLogic/QLogicAspect>
+#include <Qt3DRender/QRenderSettings>
+#include <Qt3DInput/QInputSettings>
+#include <Qt3DRender/QRenderSurfaceSelector>
+#include <Qt3DRender/QViewport>
+#include <Qt3DRender/QCameraSelector>
+#include <Qt3DRender/QClearBuffers>
+#include <Qt3DRender/QTechniqueFilter>
+#include <Qt3DRender/QFilterKey>
+#include <Qt3DRender/QNoDraw>
+#include <Qt3DRender/QLayerFilter>
+#include <Qt3DRender/QLayer>
+#include <Qt3DRender/QCamera>
+#include <Qt3DRender/QSortPolicy>
 #include <QSurfaceFormat>
 #include <QOpenGLContext>
 

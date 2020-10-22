@@ -4,7 +4,7 @@
 #define QT3D_IMGUI_WINDOW_H
 
 #include <QWindow>
-#include <QAspectEngine>
+#include <Qt3DCore/QAspectEngine>
 
 namespace Qt3DRender {
 class QCamera;

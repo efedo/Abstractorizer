@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "qt3d_imgui_window.h"
+#include "qt3d/qt3d_imgui_window.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
