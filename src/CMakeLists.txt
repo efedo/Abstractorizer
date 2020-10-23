@@ -5,18 +5,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 add_subdirectory(qt3d)
-
-#if( QT5_FOUND )
-#message(STATUS "Found QT5 version: ${QT5_VERSION_MAJOR}.${QT5_VERSION_MINOR}")
-#else()
-#message(FATAL_ERROR "QT5 not found")
-#endif()
-
-#message(STATUS "Include directories for " ${CMAKE_CURRENT_SOURCE_DIR} " :")
-#get_directory_property(dirs INCLUDE_DIRECTORIES)
-#foreach(dir ${dirs})
-#  message(STATUS "dir='${dir}'")
-#endforeach()
+add_subdirectory(urho3d)
 
 set(SOURCES 
 	main.cpp
@@ -35,7 +24,9 @@ foreach(CurrTargetType ${AllTargetTypes})
 	set_property(TARGET ${CurrTarget} PROPERTY AUTORCC TRUE)
 
 	add_dependencies(${CurrTarget} qt3d-${CurrTargetType})
-	target_link_libraries(${CurrTarget} qt3d-${CurrTargetType} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::3DCore Qt5::3DExtras Qt5::3DRender Qt5::3DLogic Qt5::3DAnimation Qt5::3DInput)
+	target_link_libraries(${CurrTarget} 
+	qt3d-${CurrTargetType} urho3d-${CurrTargetType}
+	Qt5::Core Qt5::Gui Qt5::Widgets Qt5::3DCore Qt5::3DExtras Qt5::3DRender Qt5::3DLogic Qt5::3DAnimation Qt5::3DInput)
 
 	# Install required DLLs
 	if (WIN32) # If Windows, might as well use WinDeployQt

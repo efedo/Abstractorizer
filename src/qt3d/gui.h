@@ -3,7 +3,7 @@
 
 #include <imgui/imgui.h>
 
-class ImguiManagerQt3D;
+class Qt3DImguiManager;
 
 namespace Qt3DCore {
 class QEntity;
@@ -16,11 +16,11 @@ class QTexture2D;
 class Gui
 {
 public:
-    Gui(ImguiManagerQt3D& manager);
+    Gui(Qt3DImguiManager& manager);
     void frame(Qt3DCore::QEntity *rootEntity);
 
 private:
-    ImguiManagerQt3D & m_manager;
+    Qt3DImguiManager & m_manager;
     bool show_test_window = true;
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);

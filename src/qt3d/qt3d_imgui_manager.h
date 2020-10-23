@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QSize>
+#include "../generic/imgui_manager.h"
 
 namespace Qt3DCore {
 class QTransform;
@@ -36,14 +37,14 @@ class QPickEvent;
 }
 
 class ImguiInputEventFilter;
-class ImguiWindowQt3D;
+class Qt3DWindow;
 class Gui;
 
-class ImguiManagerQt3D : public QObject {
+class Qt3DImguiManager : public ImguiManager {
     Q_OBJECT
 public:
-    ImguiManagerQt3D(ImguiWindowQt3D & parentWindow, Qt3DCore::QEntity & rootEntity);
-    ~ImguiManagerQt3D();
+    Qt3DImguiManager(Qt3DWindow & parentWindow, Qt3DCore::QEntity & rootEntity);
+    ~Qt3DImguiManager();
 
     void setupInputEventSource();
 
@@ -77,7 +78,7 @@ private:
 
     OutputInfo m_outputInfo;
 
-    ImguiWindowQt3D & _parentWindow;
+    Qt3DWindow & _parentWindow;
     Qt3DCore::QEntity & _rootEntity;
     Gui * _gui = nullptr;
     Qt3DExtras::QPhongMaterial* toggleTextMat = nullptr;

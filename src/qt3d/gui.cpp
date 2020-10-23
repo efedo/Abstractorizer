@@ -18,7 +18,7 @@ public:
     }
 };
 
-Gui::Gui(ImguiManagerQt3D& manager)
+Gui::Gui(Qt3DImguiManager& manager)
     : m_manager(manager)
 {}
 

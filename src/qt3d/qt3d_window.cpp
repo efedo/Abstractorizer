@@ -21,10 +21,10 @@
 #include <QSurfaceFormat>
 #include <QOpenGLContext>
 
-#include "qt3d_imgui_window.h"
+#include "qt3d_window.h"
 #include "qt3d_imgui_manager.h"
 
-ImguiWindowQt3D::ImguiWindowQt3D()
+Qt3DWindow::Qt3DWindow()
 {
     setSurfaceType(QSurface::OpenGLSurface);
     createAspectEngine();
@@ -40,11 +40,11 @@ ImguiWindowQt3D::ImguiWindowQt3D()
     setFormat(fmt);
     createFramegraph();
 
-    _guiMgr = std::make_unique<ImguiManagerQt3D>(*this, *m_rootEntity);
+    _guiMgr = std::make_unique<Qt3DImguiManager>(*this, *m_rootEntity);
     _guiMgr->createScene(); // Might have to move later
 }
 
-void ImguiWindowQt3D::createAspectEngine()
+void Qt3DWindow::createAspectEngine()
 {
     _aspectEngine.reset(new Qt3DCore::QAspectEngine);
     //Qt3DRender::QRenderAspect * naspect = new Qt3DRender::QRenderAspect(Qt3DRender::QRenderAspect::RenderType::Threaded);
@@ -55,7 +55,7 @@ void ImguiWindowQt3D::createAspectEngine()
     _aspectEngine->registerAspect(new Qt3DLogic::QLogicAspect);
 }
 
-void ImguiWindowQt3D::exposeEvent(QExposeEvent *)
+void Qt3DWindow::exposeEvent(QExposeEvent *)
 {
     static bool isRootSet = false;
     if (!m_rootEntity) createFramegraph();
@@ -65,7 +65,7 @@ void ImguiWindowQt3D::exposeEvent(QExposeEvent *)
     }
 }
 
-void ImguiWindowQt3D::resizeEvent(QResizeEvent *)
+void Qt3DWindow::resizeEvent(QResizeEvent *)
 {
     if (m_sceneCamera)
         m_sceneCamera->setAspectRatio(width() / float(height()));
@@ -76,7 +76,7 @@ void ImguiWindowQt3D::resizeEvent(QResizeEvent *)
     }
 }
 
-void ImguiWindowQt3D::createFramegraph()
+void Qt3DWindow::createFramegraph()
 {
     m_rootEntity = new Qt3DCore::QEntity;
     m_rootEntity->setObjectName(QLatin1String("root"));

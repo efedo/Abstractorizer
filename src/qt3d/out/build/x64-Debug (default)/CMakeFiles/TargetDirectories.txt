@@ -1,3 +1,0 @@
-C:/Programming/Abstractorizer/src/imgui-qt3d-test/out/build/x64-Debug (default)/CMakeFiles/abstractorizer.dir
-C:/Programming/Abstractorizer/src/imgui-qt3d-test/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
-C:/Programming/Abstractorizer/src/imgui-qt3d-test/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir

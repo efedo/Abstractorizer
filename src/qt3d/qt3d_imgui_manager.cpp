@@ -1,6 +1,6 @@
 // Original code from https://github.com/alpqr/imgui-qt3d
 
-#include "qt3d_imgui_window.h"
+#include "qt3d_window.h"
 #include "qt3d_imgui_manager.h"
 #include "gui.h"
 #include "imgui/imgui.h"
@@ -96,13 +96,13 @@ private:
     Qt3DRender::QTextureImageDataGeneratorPtr m_gen;
 };
 
-ImguiManagerQt3D::ImguiManagerQt3D(ImguiWindowQt3D & parentWindow, Qt3DCore::QEntity & rootEntity)
+Qt3DImguiManager::Qt3DImguiManager(Qt3DWindow & parentWindow, Qt3DCore::QEntity & rootEntity)
     : _parentWindow(parentWindow), _rootEntity(rootEntity)
 {
     _gui = new Gui(*this);
 
     Qt3DLogic::QFrameAction* frameUpdater = new Qt3DLogic::QFrameAction;
-    QObject::connect(frameUpdater, &Qt3DLogic::QFrameAction::triggered, this, &ImguiManagerQt3D::updateFrame);
+    QObject::connect(frameUpdater, &Qt3DLogic::QFrameAction::triggered, this, &Qt3DImguiManager::updateFrame);
     _rootEntity.addComponent(frameUpdater);
 
     ImGuiIO& io = ImGui::GetIO();
@@ -125,7 +125,7 @@ ImguiManagerQt3D::ImguiManagerQt3D(ImguiWindowQt3D & parentWindow, Qt3DCore::QEn
     setupInputEventSource();
 }
 
-ImguiManagerQt3D::OutputInfo ImguiManagerQt3D::getOutputInfo() {
+Qt3DImguiManager::OutputInfo Qt3DImguiManager::getOutputInfo() {
     OutputInfo outputInfo;
     outputInfo.size = _parentWindow.size();
     outputInfo.dpr = _parentWindow.devicePixelRatio();
@@ -135,12 +135,12 @@ ImguiManagerQt3D::OutputInfo ImguiManagerQt3D::getOutputInfo() {
     return outputInfo;
 };
 
-void ImguiManagerQt3D::pickTexSlot(Qt3DRender::QPickEvent* /*pickEvent*/) {
+void Qt3DImguiManager::pickTexSlot(Qt3DRender::QPickEvent* /*pickEvent*/) {
     this->setEnabled(!isEnabled());
     toggleTextMat->setDiffuse(isEnabled() ? Qt::green : Qt::red);
 }
 
-void ImguiManagerQt3D::createScene() {
+void Qt3DImguiManager::createScene() {
 
     // Maybe should use _parent here instead of &_rootEntity
     Qt3DCore::QEntity* cube = new Qt3DCore::QEntity(&_rootEntity);
@@ -192,7 +192,7 @@ void ImguiManagerQt3D::createScene() {
     toggleText->addComponent(toggleTextTrans);
     toggleText->addComponent(toggleTextMat);
     Qt3DRender::QObjectPicker* toggleTextPicker = new Qt3DRender::QObjectPicker;
-    QObject::connect(toggleTextPicker, &Qt3DRender::QObjectPicker::pressed, this, &ImguiManagerQt3D::pickTexSlot);
+    QObject::connect(toggleTextPicker, &Qt3DRender::QObjectPicker::pressed, this, &Qt3DImguiManager::pickTexSlot);
     //[toggleTextMat, &_guiMgr](Qt3DRender::QPickEvent*) {
     //_guiMgr.setEnabled(!_guiMgr.isEnabled());
     //toggleTextMat->setDiffuse(_guiMgr.isEnabled() ? Qt::green : Qt::red);
@@ -200,7 +200,7 @@ void ImguiManagerQt3D::createScene() {
     toggleText->addComponent(toggleTextPicker);
 }
 
-void ImguiManagerQt3D::updateFrame() {
+void Qt3DImguiManager::updateFrame() {
     if (!m_enabled) return;
 
     m_outputInfo = getOutputInfo();
@@ -225,16 +225,16 @@ void ImguiManagerQt3D::updateFrame() {
 }
 
 // To be called when the Qt 3D scene goes down (and thus destroys the objects
-// ImguiManagerQt3D references) but the ImguiManagerQt3D instance will be reused later
+// Qt3DImguiManager references) but the Qt3DImguiManager instance will be reused later
 // on. Must be followed by a call to initialize().
-void ImguiManagerQt3D::releaseResources()
+void Qt3DImguiManager::releaseResources()
 {
     // assume that everything starting from our root entity is already gone
     rpd = SharedRenderPassData();
     m_cmdList.clear();
 }
 
-void ImguiManagerQt3D::resizePool(CmdListEntry *e, int newSize)
+void Qt3DImguiManager::resizePool(CmdListEntry *e, int newSize)
 {
     Q_ASSERT(m_outputInfo.guiTag && m_outputInfo.activeGuiTag);
 
@@ -278,7 +278,7 @@ void ImguiManagerQt3D::resizePool(CmdListEntry *e, int newSize)
     e->activeSize = newSize;
 }
 
-void ImguiManagerQt3D::updateGeometry(CmdListEntry *e, int idx, uint elemCount, int vertexCount, int indexCount, const void *indexOffset)
+void Qt3DImguiManager::updateGeometry(CmdListEntry *e, int idx, uint elemCount, int vertexCount, int indexCount, const void *indexOffset)
 {
     Qt3DRender::QGeometryRenderer *gr = e->cmds[idx].geomRenderer;
     Qt3DRender::QGeometry *g = gr->geometry();
@@ -358,7 +358,7 @@ void ImguiManagerQt3D::updateGeometry(CmdListEntry *e, int idx, uint elemCount, 
 }
 
 // called once per frame, performs gui-related updates for the scene
-void ImguiManagerQt3D::update3D()
+void Qt3DImguiManager::update3D()
 {
     ImDrawData *d = ImGui::GetDrawData();
     ImGuiIO &io = ImGui::GetIO();
@@ -489,7 +489,7 @@ static const char *fragSrcGL3 =
         "    fragColor = color * texture(tex, uv);\n"
         "}\n";
 
-Qt3DRender::QMaterial *ImguiManagerQt3D::buildMaterial(Qt3DRender::QScissorTest **scissor)
+Qt3DRender::QMaterial *Qt3DImguiManager::buildMaterial(Qt3DRender::QScissorTest **scissor)
 {
     Qt3DRender::QMaterial *material = new Qt3DRender::QMaterial;
     Qt3DRender::QEffect *effect = new Qt3DRender::QEffect;
@@ -651,20 +651,20 @@ bool ImguiInputEventFilter::eventFilter(QObject *, QEvent *event)
     return false;
 }
 
-ImguiManagerQt3D::~ImguiManagerQt3D()
+Qt3DImguiManager::~Qt3DImguiManager()
 {
     delete m_inputEventFilter;
     if (_gui) delete _gui;
 }
 
-void ImguiManagerQt3D::setupInputEventSource()
+void Qt3DImguiManager::setupInputEventSource()
 {
     if (m_inputEventFilter) _parentWindow.removeEventFilter(m_inputEventFilter);
     if (!m_inputEventFilter) m_inputEventFilter = new ImguiInputEventFilter;
     _parentWindow.installEventFilter(m_inputEventFilter);
 }
 
-void ImguiManagerQt3D::updateInput()
+void Qt3DImguiManager::updateInput()
 {
     if (!m_inputEventFilter)
         return;
@@ -724,7 +724,7 @@ void ImguiManagerQt3D::updateInput()
     }
 }
 
-void ImguiManagerQt3D::setEnabled(bool enabled)
+void Qt3DImguiManager::setEnabled(bool enabled)
 {
     if (m_enabled == enabled)
         return;
@@ -738,7 +738,7 @@ void ImguiManagerQt3D::setEnabled(bool enabled)
         m_inputEventFilter->enabled = m_enabled;
 }
 
-void ImguiManagerQt3D::setScale(float scale)
+void Qt3DImguiManager::setScale(float scale)
 {
     m_scale = scale;
 }

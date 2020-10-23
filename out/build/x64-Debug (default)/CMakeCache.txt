@@ -20,7 +20,9 @@ Abstractorizer_BINARY_DIR:STATIC=C:/Programming/Abstractorizer/out/build/x64-Deb
 //Value Computed by CMake
 Abstractorizer_SOURCE_DIR:STATIC=C:/Programming/Abstractorizer
 
-//No help, variable specified on the command line.
+//Specify CMake build configuration (single-configuration generator
+// only), possible values are Release (default), RelWithDebInfo,
+// and Debug
 CMAKE_BUILD_TYPE:STRING=Debug
 
 //No help, variable specified on the command line.
@@ -213,23 +215,17 @@ CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=C:/Programming/lib/vcpkg/scripts/buildsystems
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Enable to build 7-Zip source packages
+CPACK_SOURCE_7Z:BOOL=ON
+
+//Enable to build ZIP source packages
+CPACK_SOURCE_ZIP:BOOL=ON
+
 //Path to a file.
 MSVC_REDIST_DIR:PATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Redist/MSVC/14.27.29016
 
-//Path to a file.
-QT3_QGLOBAL_H_FILE:FILEPATH=QT3_QGLOBAL_H_FILE-NOTFOUND
-
-//Path to a file.
-QT4_QGLOBAL_H_FILE:FILEPATH=QT4_QGLOBAL_H_FILE-NOTFOUND
-
 //The directory containing a CMake configuration file for QT5.
 QT5_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
-
-//The directory containing a CMake configuration file for QT.
-QT_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
-
-//Path to a program.
-QT_QMAKE_EXECUTABLE_FINDQT:FILEPATH=C:/Qt/5.15.1/msvc2019_64/bin/qmake.exe
 
 //The directory containing a CMake configuration file for Qt53DAnimation.
 Qt53DAnimation_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DAnimation
@@ -249,9 +245,6 @@ Qt53DLogic_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DLogic
 //The directory containing a CMake configuration file for Qt53DRender.
 Qt53DRender_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt53DRender
 
-//The directory containing a CMake configuration file for Qt5ANGLE.
-Qt5ANGLE_DIR:PATH=Qt5ANGLE_DIR-NOTFOUND
-
 //The directory containing a CMake configuration file for Qt5Concurrent.
 Qt5Concurrent_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Concurrent
 
@@ -267,20 +260,58 @@ Qt5Gui_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Gui
 //The directory containing a CMake configuration file for Qt5Network.
 Qt5Network_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Network
 
-//The directory containing a CMake configuration file for Qt5Platform.
-Qt5Platform_DIR:PATH=Qt5Platform_DIR-NOTFOUND
-
 //The directory containing a CMake configuration file for Qt5Widgets.
 Qt5Widgets_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5Widgets
 
-//The directory containing a CMake configuration file for Qt5Windows.
-Qt5Windows_DIR:PATH=Qt5Windows_DIR-NOTFOUND
+//Enable AngelScript scripting support
+URHO3D_ANGELSCRIPT:BOOL=ON
 
-//The directory containing a CMake configuration file for Qt5.
-Qt5_DIR:PATH=C:/Qt/5.15.1/msvc2019_64/lib/cmake/Qt5
+//Urho3D include directory
+URHO3D_BASE_INCLUDE_DIR:PATH=URHO3D_BASE_INCLUDE_DIR-NOTFOUND
 
-//The directory containing a CMake configuration file for Qt.
-Qt_DIR:PATH=Qt_DIR-NOTFOUND
+//Path to Urho3D build tree or SDK installation location (downstream
+// project only)
+URHO3D_HOME:PATH=
+
+//Enable inverse kinematics support
+URHO3D_IK:BOOL=ON
+
+//Urho3D library directory
+URHO3D_LIBRARIES:FILEPATH=URHO3D_LIBRARIES-NOTFOUND
+
+//Path to a library.
+URHO3D_LIBRARIES_DBG:FILEPATH=URHO3D_LIBRARIES_DBG-NOTFOUND
+
+//Specify Urho3D library type, possible values are STATIC (default)
+// and SHARED (not available for Emscripten)
+URHO3D_LIB_TYPE:STRING=
+
+//Enable additional Lua scripting support
+URHO3D_LUA:BOOL=ON
+
+//Enable navigation support
+URHO3D_NAVIGATION:BOOL=ON
+
+//Enable networking support
+URHO3D_NETWORK:BOOL=ON
+
+//Enable physics support
+URHO3D_PHYSICS:BOOL=ON
+
+//Enable 2D graphics and physics support
+URHO3D_URHO2D:BOOL=ON
+
+//Enable WebP support
+URHO3D_WEBP:BOOL=ON
+
+//Value Computed by CMake
+Urho3D_BINARY_DIR:STATIC=C:/Programming/Abstractorizer/out/build/x64-Debug (default)/src/urho3d/[C:/Programming/Abstractorizer/bin]
+
+//The directory containing a CMake configuration file for Urho3D.
+Urho3D_DIR:PATH=Urho3D_DIR-NOTFOUND
+
+//Value Computed by CMake
+Urho3D_SOURCE_DIR:STATIC=C:/Programming/lib/Urho3D
 
 //Automatically copy dependencies into the output directory for
 // executables.
@@ -394,7 +425,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MT
 CMAKE_MT-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
 //Platform information initialized
 CMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_RC_COMPILER
@@ -440,14 +471,30 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_TOOLCHAIN_FILE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CPACK_SOURCE_7Z
+CPACK_SOURCE_7Z-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CPACK_SOURCE_ZIP
+CPACK_SOURCE_ZIP-ADVANCED:INTERNAL=1
+//MKLINK capability
+HAS_MKLINK:INTERNAL=TRUE
+//Have include inttypes.h
+HAVE_INTTYPES_H:INTERNAL=1
+//Have include malloc.h
+HAVE_MALLOC_H:INTERNAL=1
+//Have function malloc_usable_size
+HAVE_MALLOC_USABLE_SIZE:INTERNAL=
+//Have library m
+HAVE_SINCOSF:INTERNAL=
+//Have include stdint.h
+HAVE_STDINT_H:INTERNAL=1
+//Have function __sincosf
+HAVE___SINCOSF:INTERNAL=
 //ADVANCED property for variable: MSVC_REDIST_DIR
 MSVC_REDIST_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: QT3_QGLOBAL_H_FILE
-QT3_QGLOBAL_H_FILE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: QT4_QGLOBAL_H_FILE
-QT4_QGLOBAL_H_FILE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: QT_QMAKE_EXECUTABLE_FINDQT
-QT_QMAKE_EXECUTABLE_FINDQT-ADVANCED:INTERNAL=1
+//Initial value for CC
+SAVED_CC:INTERNAL=
+//Initial value for CXX
+SAVED_CXX:INTERNAL=
 //ADVANCED property for variable: VCPKG_VERBOSE
 VCPKG_VERBOSE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: WINDOWS_KITS_DIR

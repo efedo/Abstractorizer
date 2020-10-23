@@ -18,23 +18,8 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>-1</number>
       </property>
-      <widget class="QWidget" name="tab_Qt3D">
-       <attribute name="title">
-        <string>Qt3D</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_Urho3D">
-       <attribute name="title">
-        <string>Urho3D</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_TheForge">
-       <attribute name="title">
-        <string>TheForge</string>
-       </attribute>
-      </widget>
      </widget>
     </item>
    </layout>

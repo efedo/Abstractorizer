@@ -4,13 +4,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-#message(STATUS "Include directories for " ${CMAKE_CURRENT_SOURCE_DIR} " :")
-#get_directory_property(dirs INCLUDE_DIRECTORIES)
-#foreach(dir ${dirs})
-#  message(STATUS "dir='${dir}'")
-#endforeach()
-
 set(SOURCES 
+    "../generic/engine_window.h"
+    ../generic/imgui_manager.h
     imgui/imgui_demo.cpp
     imgui/imgui_draw.cpp
     imgui/imgui.cpp
@@ -18,8 +14,8 @@ set(SOURCES
     gui.cpp
     qt3d_imgui_manager.h
     qt3d_imgui_manager.cpp
-    qt3d_imgui_window.h
-    qt3d_imgui_window.cpp
+    qt3d_window.h
+    qt3d_window.cpp
 )
 
 foreach(CurrTargetType ${AllTargetTypes})
