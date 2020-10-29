@@ -5,7 +5,7 @@
 
 #include <QWindow>
 #include <QWidget>
-#include "../generic/engine_window.h"
+#include "../generic/engine_widget.h"
 #include <Qt3DCore/QAspectEngine>
 
 namespace Qt3DRender {
@@ -18,7 +18,7 @@ class Gui;
 class Qt3DImguiManager;
 
 // Provides a window with a Qt3D scene and a framegraph with a gui pass
-class Qt3DWindow : public EngineWindow
+class Qt3DWindow : public QWindow
 {
 public:
     Qt3DWindow();

@@ -1,0 +1,8 @@
+function(print_includes)
+    message(STATUS "Include directories for " ${CMAKE_CURRENT_SOURCE_DIR} " :")
+    get_directory_property(dirs INCLUDE_DIRECTORIES)
+    list(REMOVE_DUPLICATES dirs)
+    foreach(dir ${dirs})
+      message(STATUS "  '${dir}'")
+    endforeach()
+endfunction()

@@ -20,9 +20,7 @@ Abstractorizer_BINARY_DIR:STATIC=C:/Programming/Abstractorizer/out/build/x64-Deb
 //Value Computed by CMake
 Abstractorizer_SOURCE_DIR:STATIC=C:/Programming/Abstractorizer
 
-//Specify CMake build configuration (single-configuration generator
-// only), possible values are Release (default), RelWithDebInfo,
-// and Debug
+//No help, variable specified on the command line.
 CMAKE_BUILD_TYPE:STRING=Debug
 
 //No help, variable specified on the command line.
@@ -221,6 +219,24 @@ CPACK_SOURCE_7Z:BOOL=ON
 //Enable to build ZIP source packages
 CPACK_SOURCE_ZIP:BOOL=ON
 
+//Path to a library.
+FOUND_SDL2_LIB_DEBUG:FILEPATH=C:/Programming/lib/SDL2-2.0.12/out/build/x64-Debug/SDL2d.lib
+
+//Path to a library.
+FOUND_SDL2_LIB_RELEASE:FILEPATH=C:/Programming/lib/SDL2-2.0.12/out/build/x64-Release/SDL2.lib
+
+//Path to a library.
+FOUND_URHO3D_LIB:FILEPATH=C:/Programming/lib/Urho3D/out/build/x64-Debug/lib/Urho3D_d.lib
+
+//Path to a library.
+FOUND_URHO3D_LIB_DEBUG:FILEPATH=C:/Programming/lib/Urho3D/out/build/x64-Debug/lib/Urho3D_d.lib
+
+//Path to a library.
+FOUND_URHO3D_LIB_RELEASE:FILEPATH=C:/Programming/lib/Urho3D/out/build/x86-Release/lib/Urho3D.lib
+
+//Path to a library.
+LIB_TO_INCLUDE:FILEPATH=LIB_TO_INCLUDE-NOTFOUND
+
 //Path to a file.
 MSVC_REDIST_DIR:PATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Redist/MSVC/14.27.29016
 
@@ -312,6 +328,9 @@ Urho3D_DIR:PATH=Urho3D_DIR-NOTFOUND
 
 //Value Computed by CMake
 Urho3D_SOURCE_DIR:STATIC=C:/Programming/lib/Urho3D
+
+//Path to a library.
+Urho3D_d:FILEPATH=Urho3D_d-NOTFOUND
 
 //Automatically copy dependencies into the output directory for
 // executables.

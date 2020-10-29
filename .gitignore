@@ -346,3 +346,5 @@ healthchecksdb
 /out/build/x64-Debug (default)/build.ninja
 /out/build/x64-Debug (default)/cmake_install.cmake
 /out/build/x64-Debug (default)/rules.ninja
+/out/build/x64-Debug
+/out/build/x64-Release

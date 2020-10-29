@@ -1,11 +1,8 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
-
-add_subdirectory(qt3d)
-add_subdirectory(urho3d)
 
 set(SOURCES 
 	main.cpp
@@ -13,6 +10,8 @@ set(SOURCES
 	mainwindow.cpp
 	mainwindow.ui	
 )
+
+set(MAGNUM_LIBRARIES_REQUIRED)
 
 foreach(CurrTargetType ${AllTargetTypes})
 	set(CurrTarget ${ProjectName}-${CurrTargetType})
@@ -25,7 +24,8 @@ foreach(CurrTargetType ${AllTargetTypes})
 
 	add_dependencies(${CurrTarget} qt3d-${CurrTargetType})
 	target_link_libraries(${CurrTarget} 
-	qt3d-${CurrTargetType} urho3d-${CurrTargetType}
+	qt3d-${CurrTargetType}
+	magnum-${CurrTargetType}
 	Qt5::Core Qt5::Gui Qt5::Widgets Qt5::3DCore Qt5::3DExtras Qt5::3DRender Qt5::3DLogic Qt5::3DAnimation Qt5::3DInput)
 
 	# Install required DLLs
@@ -54,8 +54,11 @@ foreach(CurrTargetType ${AllTargetTypes})
 		endforeach()
 		message(STATUS "Non-Windows post-build installation set up for target ${CurrTarget} (should work for most platforms)")
 	endif()
-
 endforeach()
+
+add_subdirectory(qt3d)
+add_subdirectory(magnum)
+# add_subdirectory(urho3d)
 
 # Install compiler runtime
 include(InstallRequiredSystemLibraries) # Installs MSVC/other compiler runtime libraries

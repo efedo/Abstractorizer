@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set(SOURCES 
-    "../generic/engine_window.h"
+    "../generic/engine_widget.h"
     ../generic/imgui_manager.h
     imgui/imgui_demo.cpp
     imgui/imgui_draw.cpp
@@ -16,7 +16,8 @@ set(SOURCES
     qt3d_imgui_manager.cpp
     qt3d_window.h
     qt3d_window.cpp
-)
+    qt3d_widget.h 
+    qt3d_widget.cpp)
 
 foreach(CurrTargetType ${AllTargetTypes})
     add_library(qt3d-${CurrTargetType} ${SOURCES})

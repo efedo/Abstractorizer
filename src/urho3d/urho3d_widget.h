@@ -3,7 +3,9 @@
 #ifndef URHO3D_WIDGET_H
 #define URHO3D_WIDGET_H
 
-#include <Urho3D/Container/Ptr.h>
+
+#include <C:/Programming/lib/Urho3D/out/build/x64-Debug/include/Urho3D/Container/Ptr.h>
+//#include <Urho3D/Container/Ptr.h>
 #include <Urho3D/Core/Object.h>
 #include <Urho3D/Engine/Engine.h>
 #include <Urho3D/Graphics/Camera.h>

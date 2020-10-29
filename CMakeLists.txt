@@ -1,11 +1,25 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
+
+# incoming variables (that user should set)
+set(QT_PREFIX "C:/Qt/5.15.1/msvc2019_64")
+set(SDL_DIR "C:/Programming/lib/SDL2-2.0.12")
+set(MAGNUM_DIR "C:/Programming/lib/magnum")
+#set(URHO3D_DIR "C:/Programming/lib/Urho3D")
+# Urho3D is just too painful to use, forget it
 
 # set the project name and version
 set(ProjectName Abstractorizer)
 project(${ProjectName} VERSION 1.0)
 set(DebugSuffix "debug")
 set(ReleaseSuffix "release")
-set(AllTargetTypes ${DebugSuffix} ${ReleaseSuffix})
+
+if (${CMAKE_BUILD_TYPE} STREQUAL "release" OR ${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo")
+    set(AllTargetTypes ${ReleaseSuffix})
+elseif(${CMAKE_BUILD_TYPE} STREQUAL "debug")
+    set(AllTargetTypes ${DebugSuffix})
+else()
+    set(AllTargetTypes ${DebugSuffix} ${ReleaseSuffix})
+endif()
 
 message(STATUS "Configuring ${ProjectName} (version ${CMAKE_PROJECT_VERSION}) with targets:")
 foreach(AllTargetTypes ${AllTargetTypes})
@@ -19,13 +33,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHc /std:c++17") # MSVC flags
 
+
 # setup Qt uic, moc, and rcc
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # Qt prefix
-set(CMAKE_PREFIX_PATH "C:/Qt/5.15.1/msvc2019_64")
+set(CMAKE_PREFIX_PATH ${QT_PREFIX})
 
 #Libraries required. Probably the same as above minus the '::'. find_package() will be called on these
 set(QT_LIBRARIES_REQUIRED Core Gui Widgets 3DCore 3DExtras 3DRender 3DLogic 3DAnimation 3DInput Network Gamepad Concurrent) #CANNOT FIND Qt5Charts
@@ -51,12 +66,9 @@ foreach(QT_LIBRARIES_REQUIRED ${QT_LIBRARIES_REQUIRED})
     endif()
 endforeach()
 
-message(STATUS "Include directories for " ${CMAKE_CURRENT_SOURCE_DIR} " :")
-get_directory_property(dirs INCLUDE_DIRECTORIES)
-list(REMOVE_DUPLICATES dirs)
-foreach(dir ${dirs})
-  message(STATUS "  '${dir}'")
-endforeach()
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+include(${CMAKE_SOURCE_DIR}/cmake/PrintIncludes.cmake)
+print_includes()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
