@@ -58,7 +58,6 @@ endforeach()
 
 add_subdirectory(qt3d)
 add_subdirectory(magnum)
-# add_subdirectory(urho3d)
 
 # Install compiler runtime
 include(InstallRequiredSystemLibraries) # Installs MSVC/other compiler runtime libraries

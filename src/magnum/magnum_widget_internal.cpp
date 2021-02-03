@@ -1,22 +1,12 @@
 
 #include "magnum_widget_internal.h"
 
-MagnumWidgetInternal::MagnumWidgetInternal(QWidget* parent, Qt::WindowFlags f) : QOpenGLWidget{ parent, f }
+MagnumWidgetInternal::MagnumWidgetInternal(QWidget* parent, Qt::WindowFlags f) : 
+    QOpenGLWidget{ parent, f }, _context(new Magnum::Platform::GLContext{ Magnum::NoCreate })
 {
-
-
-    _context = new Magnum::Platform::GLContext(Magnum::NoCreate);
-    _mesh = new Magnum::GL::Mesh;
-    _shader = new Magnum::Shaders::VertexColor2D;
-
-    //QSurfaceFormat format;
-    //format.setDepthBufferSize(24);
-    //format.setStencilBufferSize(8);
-    //format.setVersion(4, 1);
-    //format.setProfile(QSurfaceFormat::CoreProfile);
-    //QSurfaceFormat::setDefaultFormat(format);
-    //this->setFormat(format);
-    initializeTriangle();
+    //_mesh = new Magnum::GL::Mesh;
+    //_shader = new Magnum::Shaders::VertexColor2D;
+    //initializeTriangle();
 }
 
 void MagnumWidgetInternal::initializeTriangle() {
@@ -42,7 +32,8 @@ void MagnumWidgetInternal::initializeTriangle() {
 }
 
 void MagnumWidgetInternal::initializeGL() {
-    _context->create(); // was create
+
+    _context->create();
 
     /* TODO: Add your initialization code here */
 
@@ -60,7 +51,7 @@ void MagnumWidgetInternal::paintGL() {
     qtDefaultFramebuffer.clear(Magnum::GL::FramebufferClear::Color);
 
     /* TODO: Add your drawing code here */
-    _shader->draw(*_mesh);
+    //_shader->draw(*_mesh);
     //Magnum::swapBuffers();
 
     /* Clean up Magnum state when giving control back to Qt */

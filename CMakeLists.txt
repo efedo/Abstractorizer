@@ -4,8 +4,7 @@ cmake_minimum_required(VERSION 3.14)
 set(QT_PREFIX "C:/Qt/5.15.1/msvc2019_64")
 set(SDL_DIR "C:/Programming/lib/SDL2-2.0.12")
 set(MAGNUM_DIR "C:/Programming/lib/magnum")
-#set(URHO3D_DIR "C:/Programming/lib/Urho3D")
-# Urho3D is just too painful to use, forget it
+set(URHO3D_DIR "C:/Programming/lib/Urho3D")
 
 # set the project name and version
 set(ProjectName Abstractorizer)

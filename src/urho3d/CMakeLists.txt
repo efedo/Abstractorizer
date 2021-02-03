@@ -4,6 +4,25 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
+set(URHO3D_INSTALL_DEBUG "${URHO3D_DIR}/out/install/x64-Debug")
+set(URHO3D_INSTALL_RELEASE "${URHO3D_DIR}/out/install/x64-Release")
+set(CMAKE_MODULE_PATH "${URHO3D_DIR}/CMake/Modules" ${CMAKE_MODULE_PATH})
+
+foreach(CurrTargetType ${AllTargetTypes})
+	set(CurrTarget ${ProjectName}-${CurrTargetType})
+    if (${CurrTargetType} STREQUAL "release")
+        set(CMAKE_PREFIX_PATH ${URHO3D_INSTALL_RELEASE} ${CMAKE_PREFIX_PATH})
+        include_directories( ${URHO3D_INSTALL_RELEASE}/include )
+        message(STATUS "Adding release include directory: '${URHO3D_INSTALL_RELEASE}/include'")
+        set(URHO3D_HOME ${URHO3D_INSTALL_RELEASE})
+    else()
+        set(CMAKE_PREFIX_PATH ${URHO3D_INSTALL_DEBUG} ${CMAKE_PREFIX_PATH})
+        include_directories( ${URHO3D_INSTALL_DEBUG}/include )
+        message(STATUS "Adding debug include directory: '${URHO3D_INSTALL_DEBUG}/include'")
+        set(URHO3D_HOME ${URHO3D_INSTALL_DEBUG})
+    endif()
+endforeach()
+
 if (COMMAND cmake_policy)
     # Libraries linked via full path no longer produce linker search paths
     cmake_policy (SET CMP0003 NEW)
@@ -17,44 +36,18 @@ if (COMMAND cmake_policy)
     cmake_policy (SET CMP0063 OLD)
 endif ()
 
-# Set CMake modules search path
-set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules)
-message(STATUS "Urho module path: ${CMAKE_MODULE_PATH}")
-
-set(URHO3D_HOME ${URHO3D_DIR}/out/build/x64-Release)
-
 # Include UrhoCommon.cmake module after setting project name
 include (UrhoCommon)
 
-foreach(CurrTargetType ${AllTargetTypes})
-	set(CurrTarget ${ProjectName}-${CurrTargetType})
-
-    # Define target name
-    set (${CurrTarget} MyExecutableName)
-
-    # Define source files
-    define_source_files ()
-
-    # Setup target with resource copying
-    setup_main_executable ()
-
-endforeach()
-
-
 set(SOURCES 
-    "../generic/engine_window.h"
-    "../generic/imgui_manager.h"
-    "urho3d_window.h"
-    "urho3d_window.cpp"
+    "urho3d_widget_internal.h"
+    "urho3d_widget_internal.cpp"
     "urho3d_widget.h" 
     "urho3d_widget.cpp"
  )
 
 foreach(CurrTargetType ${AllTargetTypes})
     add_library(urho3d-${CurrTargetType} ${SOURCES})
-endforeach()
-
-foreach(CurrTargetType ${AllTargetTypes})
 	set(CurrTarget ${ProjectName}-${CurrTargetType})
 	add_dependencies(${CurrTarget} urho3d-${CurrTargetType})
 	target_link_libraries(${CurrTarget} urho3d-${CurrTargetType})

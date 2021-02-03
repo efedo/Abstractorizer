@@ -15,12 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //_addWindowTab(QWidget::createWindowContainer(new Qt3DWindow), "Qt3D");
-    _addWindowTab(new Qt3DWidget, "Qt3D");
-    _addWindowTab(new MagnumWidget, "Magnum");
-    //_addWindowTab(new Urho3dWidget, "Urho3D");
+    _addWindowTab<Qt3DWidget>("Qt3D");
+    _addWindowTab<MagnumWidget>("Magnum");
+    //_addWindowTab(new Urho3DWidgetInternal, "Urho3D");
 
     //Urho3D::SharedPtr<Urho3D::Context> context = new Urho3D::Context();
-    //Urho3dWidget * = new Urho3dWidget(context.Get(), this);
+    //Urho3DWidgetInternal * = new Urho3DWidgetInternal(context.Get(), this);
     //w->Setup();
     //w->Start();
 }
@@ -32,7 +32,7 @@ void MainWindow::_addWindowTab(const std::string& name) {
     int index = ui->tabWidget->addTab(newTab, name.c_str());
     ui->tabWidget->setTabEnabled(index, true);
     newTab->setLayout(layout);
-    EngineWidget* widgetPtr = new EngType(layout),
+    EngineWidget* widgetPtr = new EngType(newTab);
     widgetPtr->resize(1280, 720);
     layout->addWidget(widgetPtr, 0, 0);
     newTab->show();

@@ -45,7 +45,7 @@ private:
     void initializeGL() override;
     void paintGL() override;
 
-    Magnum::Platform::GLContext* _context = 0;
+    Magnum::Platform::GLContext * _context;
     Magnum::GL::Mesh* _mesh;
     Magnum::Shaders::VertexColor2D* _shader;
 };
