@@ -1,66 +1,43 @@
 cmake_minimum_required(VERSION 3.14)
 
+#include(${UTILOGENY_DIR}/cmake/target_add_tbb.cmake)
+include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+# incoming variables (that user should set)
+set(MAGNUM_DIR "C:/Programming/lib/magnum" CACHE STRING "Magnum directory")
+set(URHO3D_DIR "C:/Programming/lib/Urho3D" CACHE STRING "Urho3D directory")
 
-set(SOURCES 
+# Setup Qt uic, moc, and rcc
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+add_executable(AbstractorizerGUI
 	main.cpp
 	mainwindow.h
 	mainwindow.cpp
-	mainwindow.ui	
+	mainwindow.ui
 )
 
-set(MAGNUM_LIBRARIES_REQUIRED)
+set_target_properties(AbstractorizerGUI PROPERTIES
+            CXX_STANDARD ${OVERRIDE_CXX_STANDARD}
+            CXX_EXTENSIONS OFF
+            )
 
-foreach(CurrTargetType ${AllTargetTypes})
-	set(CurrTarget ${ProjectName}-${CurrTargetType})
-	add_executable(${CurrTarget} ${SOURCES})
+#target_precompile_headers(AbstractorizerGUI PRIVATE qtprecomp.h)
 
-	# Theoretically automoc should take care of this, but just in case....
-	set_property(TARGET ${CurrTarget} PROPERTY AUTOMOC TRUE)
-	set_property(TARGET ${CurrTarget} PROPERTY AUTOUIC TRUE)
-	set_property(TARGET ${CurrTarget} PROPERTY AUTORCC TRUE)
+target_config_compiler(AbstractorizerGUI)
 
-	add_dependencies(${CurrTarget} qt3d-${CurrTargetType})
-	target_link_libraries(${CurrTarget} 
-	qt3d-${CurrTargetType}
-	magnum-${CurrTargetType}
-	Qt5::Core Qt5::Gui Qt5::Widgets Qt5::3DCore Qt5::3DExtras Qt5::3DRender Qt5::3DLogic Qt5::3DAnimation Qt5::3DInput)
+set(QT_LIBRARIES_REQUIRED Core Gui Widgets 3DCore 3DExtras 3DRender 3DLogic 3DAnimation 3DInput Network Gamepad Concurrent PrintSupport WinExtras) #CANNOT FIND Qt5Charts
+target_link_qt(AbstractorizerGUI)
 
-	# Install required DLLs
-	if (WIN32) # If Windows, might as well use WinDeployQt
-		get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
-		get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
-		find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
-		if (NOT WINDEPLOYQT_EXECUTABLE)
-			message(FATAL_ERROR "WinDeployQt not found")
-		endif()
-		add_custom_command(TARGET ${CurrTarget} POST_BUILD
-			COMMAND "${CMAKE_COMMAND}" -E
-				env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
-					--verbose 0
-					--no-compiler-runtime
-					\"$<TARGET_FILE:${CurrTarget}>\"
-			COMMENT "Deploying Qt..."
-		)
-		set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE) # installs UCRT libraries when installing system libraries (below)
-		message(STATUS "Windows post-build installation successfully set up for target ${CurrTarget} via WinDeployQt.exe")
-	else()
-		foreach(QT_LIBRARIES_REQUIRED ${QT_LIBRARIES_REQUIRED})
-			add_custom_command(TARGET ${CurrTarget} POST_BUILD
-				COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::${QT_LIBRARIES_REQUIRED}> $<TARGET_FILE_DIR:${CurrTarget}>
-			)
-		endforeach()
-		message(STATUS "Non-Windows post-build installation set up for target ${CurrTarget} (should work for most platforms)")
-	endif()
-endforeach()
+#set(MAGNUM_LIBRARIES_REQUIRED)
+#add_subdirectory(qt3d)
+#add_subdirectory(magnum)
 
-add_subdirectory(qt3d)
-add_subdirectory(magnum)
-
-# Install compiler runtime
-include(InstallRequiredSystemLibraries) # Installs MSVC/other compiler runtime libraries
-
+target_link_libraries(UtilogenyCore)
+#target_link_libraries(AbstractorizerQt3D AbstractorizerMagnum)
 
 

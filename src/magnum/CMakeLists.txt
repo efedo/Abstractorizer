@@ -43,8 +43,6 @@ endif()
 
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
 
-print_includes()
-
 foreach(CurrTargetType ${AllTargetTypes})
 
 	set(CurrTarget ${ProjectName}-${CurrTargetType})

@@ -15,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //_addWindowTab(QWidget::createWindowContainer(new Qt3DWindow), "Qt3D");
-    _addWindowTab<Qt3DWidget>("Qt3D");
-    _addWindowTab<MagnumWidget>("Magnum");
+    //_addWindowTab<Qt3DWidget>("Qt3D");
+    //_addWindowTab<MagnumWidget>("Magnum");
     //_addWindowTab(new Urho3DWidgetInternal, "Urho3D");
 
     //Urho3D::SharedPtr<Urho3D::Context> context = new Urho3D::Context();
