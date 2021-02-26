@@ -2,8 +2,15 @@
 #include "ui_mainwindow.h"
 
 #include "generic/engine_widget.h"
+
+#ifdef USE_QT3D
 #include "qt3d/qt3d_widget.h"
+#endif
+
+#ifdef USE_MAGNUM
 #include "magnum/magnum_widget.h"
+#endif
+
 //#include "urho3d/urho3d_widget.h"
 
 #include <QLabel>
@@ -14,9 +21,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //_addWindowTab(QWidget::createWindowContainer(new Qt3DWindow), "Qt3D");
-    //_addWindowTab<Qt3DWidget>("Qt3D");
-    //_addWindowTab<MagnumWidget>("Magnum");
+    #ifdef USE_QT3D
+    _addWindowTab<Qt3DWidget>("Qt3D");
+    #endif
+
+    #ifdef USE_MAGNUM
+    _addWindowTab<MagnumWidget>("Magnum");
+    #endif
+
     //_addWindowTab(new Urho3DWidgetInternal, "Urho3D");
 
     //Urho3D::SharedPtr<Urho3D::Context> context = new Urho3D::Context();

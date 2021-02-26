@@ -1,7 +1,7 @@
-#ifndef QT3D_IMGUI_WIDGET_H
-#define QT3D_IMGUI_WIDGET_H
+#pragma once
 
-#include "../generic/engine_widget.h"
+#include "Abstractorizer/src/generic/engine_widget.h"
+#include <iostream>
 
 class Qt3DWindow;
 
@@ -16,4 +16,15 @@ private:
 	QWidget * widgetPtr;
 };
 
-#endif //QT3D_IMGUI_WIDGET_H
+//class TestBlahClass {
+//public:
+//	TestBlahClass(int blah) {
+//		int c = blah;
+//	}
+//	int c;
+//};
+
+//void testFuncB() {
+//	TestBlahClass testClass(5);
+//	std::cout << "Blah!";
+//}

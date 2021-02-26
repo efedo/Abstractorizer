@@ -3,6 +3,7 @@
 
 #include "../generic/engine_widget.h"
 
+
 class MagnumWidgetInternal;
 
 class MagnumWidget : public EngineWidget {

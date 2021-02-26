@@ -3,8 +3,6 @@ cmake_minimum_required(VERSION 3.14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_library(AbstractorizerQt3D
-    ../generic/engine_widget.h
-    ../generic/imgui_manager.h
     imgui/imgui_demo.cpp
     imgui/imgui_draw.cpp
     imgui/imgui.cpp
@@ -17,3 +15,5 @@ add_library(AbstractorizerQt3D
     qt3d_widget.h 
     qt3d_widget.cpp
 )
+
+target_include_qt(TARGET AbstractorizerQt3D COMPONENTS ${QT_LIBRARIES_REQUIRED})
