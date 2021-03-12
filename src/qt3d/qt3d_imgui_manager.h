@@ -1,7 +1,6 @@
 // Original code from https://github.com/alpqr/imgui-qt3d
 
-#ifndef QT3D_IMGUI_MANAGER_H
-#define QT3D_IMGUI_MANAGER_H
+#pragma once
 
 #include <QObject>
 #include <QSize>
@@ -121,5 +120,3 @@ private:
 
     QVector<CmdListEntry> m_cmdList;
 };
-
-#endif

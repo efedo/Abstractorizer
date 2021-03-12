@@ -1,5 +1,4 @@
-#ifndef ENGINE_WIDGET_H
-#define ENGINE_WIDGET_H
+#pragma once
 
 #include <QWidget>
 
@@ -10,5 +9,3 @@ public:
 	virtual void resizeEvent(QResizeEvent*) override {}
 	//virtual void update() override {}
 };
-
-#endif

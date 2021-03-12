@@ -1,5 +1,4 @@
-#ifndef MAGNUM_INTERNAL_WIDGET_H
-#define MAGNUM_INTERNAL_WIDGET_H
+#pragma once
 
 #include <Corrade/Containers/Optional.h>
 /* Magnum GL headers always have to be included before Qt ones */
@@ -49,5 +48,3 @@ private:
     Magnum::GL::Mesh* _mesh;
     Magnum::Shaders::VertexColor2D* _shader;
 };
-
-#endif //MAGNUM_INTERNAL_WIDGET_H

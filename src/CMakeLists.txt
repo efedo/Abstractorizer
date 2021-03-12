@@ -5,6 +5,7 @@ include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_sdl.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_magnum.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_urho3d.cmake)
+include(${UTILOGENY_DIR}/cmake/target_add_wicked.cmake)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -18,9 +19,16 @@ if(INCLUDE_MAGNUM)
 	add_compile_definitions(USE_MAGNUM)
 endif()
 
-option(INCLUDE_URHO3D "Include Urho3D engine" ON)
+# The Urho3D CMake files are such a mess that I gave up
+# Also it doesn't currently build from head without Android SDK
+option(INCLUDE_URHO3D "Include Urho3D engine" OFF)
 if(INCLUDE_URHO3D)
 	add_compile_definitions(USE_URHO3D)
+endif()
+
+option(INCLUDE_WICKED "Include WickedEngine engine" ON)
+if(INCLUDE_WICKED)
+	add_compile_definitions(USE_WICKED)
 endif()
 
 
@@ -72,6 +80,12 @@ if(INCLUDE_URHO3D)
 	target_link_libraries(AbstractorizerGUI AbstractorizerUrho3D)
 endif()
 
+if(INCLUDE_WICKED)
+	add_subdirectory(wicked)
+	target_link_wicked(AbstractorizerGUI)
+	target_link_libraries(AbstractorizerGUI AbstractorizerWicked)
+endif()
+
 target_link_qt(TARGET AbstractorizerGUI COMPONENTS ${QT_LIBRARIES_REQUIRED})
-target_link_libraries(AbstractorizerGUI AbstractorizerGeneric UtilogenyCore) #AbstractorizerMagnum
+target_link_libraries(AbstractorizerGUI AbstractorizerGeneric) # UtilogenyCore #AbstractorizerMagnum
 

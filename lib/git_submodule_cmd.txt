@@ -1,1 +1,5 @@
-git submodule add "https://github.com/urho3d/Urho3D" lib/urho3d
+To add submodule (from parent dir):
+git submodule add "https://github.com/efedo/WickedEngine" lib/WickedEngine
+
+To update submodules to latest commit:
+git submodule update --remote --merge

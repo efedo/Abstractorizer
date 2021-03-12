@@ -1,8 +1,6 @@
 // modified from https://github.com/rdhafidh/Urho3DInsideQWidget/blob/master/urho3dwidget.h
 
-#ifndef URHO3D_WIDGET_H
-#define URHO3D_WIDGET_H
-
+#pragma once
 
 #include <C:/Programming/lib/Urho3D/out/build/x64-Debug/include/Urho3D/Container/Ptr.h>
 //#include <Urho3D/Container/Ptr.h>
@@ -56,5 +54,3 @@ private:
     // Movement speed as world units per second
     const float MOVE_SPEED = 40.0f;
 };
-
-#endif  // URHO3D_WIDGET_H

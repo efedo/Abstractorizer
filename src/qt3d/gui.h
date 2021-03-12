@@ -1,5 +1,4 @@
-#ifndef GUI_H
-#define GUI_H
+#pragma once
 
 #include <imgui/imgui.h>
 
@@ -26,6 +25,3 @@ private:
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     Qt3DRender::QTexture2D *m_customTexture = nullptr;
 };
-
-
-#endif

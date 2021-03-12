@@ -19,9 +19,9 @@ post_project_boilerplate(NAME "Abstractorizer")
 # configure a header file to pass the version number to the source code
 configure_file(src/cmakeversion.h.in src/cmakeversion.h)
 
-if(NOT TARGET UtilogenyCore)
-	add_subdirectory(${UTILOGENY_DIR} ${CMAKE_BINARY_DIR}/lib/Utilogeny)
-endif()
+#if(NOT TARGET UtilogenyCore)
+#	add_subdirectory(${UTILOGENY_DIR} ${CMAKE_BINARY_DIR}/lib/Utilogeny)
+#endif()
 
 add_subdirectory(src)
 

@@ -3,4 +3,4 @@
 	url = https://github.com/urho3d/Urho3D
 [submodule "lib/WickedEngine"]
 	path = lib/WickedEngine
-	url = https://github.com/turanszkij/WickedEngine
+	url = https://github.com/efedo/WickedEngine

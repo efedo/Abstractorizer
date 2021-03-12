@@ -1,7 +1,6 @@
 // Original code from https://github.com/alpqr/imgui-qt3d
 
-#ifndef QT3D_IMGUI_WINDOW_H
-#define QT3D_IMGUI_WINDOW_H
+#pragma once
 
 #include <QWindow>
 #include <QWidget>
@@ -41,5 +40,3 @@ private:
     Qt3DRender::QLayer* activeGuiTag() const { return m_activeGuiTag; }
     Qt3DRender::QFilterKey* guiTechniqueFilterKey() const { return m_guiTechniqueFilterKey; }
 };
-
-#endif

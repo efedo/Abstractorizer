@@ -1,5 +1,4 @@
-#ifndef MAGNUM_WIDGET_H
-#define MAGNUM_WIDGET_H
+#pragma once
 
 #include "../generic/engine_widget.h"
 
@@ -15,5 +14,3 @@ public:
 private:
 	MagnumWidgetInternal * internalWidgetPtr = 0;
 };
-
-#endif //MAGNUM_WIDGET_H

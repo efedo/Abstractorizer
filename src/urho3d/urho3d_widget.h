@@ -1,5 +1,4 @@
-#ifndef URHO3D_WINDOW_H
-#define URHO3D_WINDOW_H
+#pragma once
 
 #include "../generic/engine_widget.h"
 
@@ -16,5 +15,3 @@ protected:
     void resizeEvent(QResizeEvent*) override;
     Urho3DWidgetInternal* internalWidgetPtr = 0;
 };
-
-#endif // URHO3D_WINDOW_H

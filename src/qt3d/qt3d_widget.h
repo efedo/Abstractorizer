@@ -15,16 +15,3 @@ private:
 	Qt3DWindow * windowPtr;
 	QWidget * widgetPtr;
 };
-
-//class TestBlahClass {
-//public:
-//	TestBlahClass(int blah) {
-//		int c = blah;
-//	}
-//	int c;
-//};
-
-//void testFuncB() {
-//	TestBlahClass testClass(5);
-//	std::cout << "Blah!";
-//}
