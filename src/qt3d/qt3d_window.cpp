@@ -44,6 +44,16 @@ Qt3DWindow::Qt3DWindow()
     _guiMgr->createScene(); // Might have to move later
 }
 
+//Qt3DWindow::~Qt3DWindow() {
+//    // Which ones need to be deleted, which ones don't? Who knows. Thanks Qt
+//    //Qt3DCore::QEntity* m_rootEntity = nullptr;
+//    //Qt3DRender::QCamera* m_sceneCamera = nullptr;
+//    //Qt3DRender::QCamera* m_guiCamera = nullptr;
+//    //Qt3DRender::QLayer* m_guiTag = nullptr;
+//    //Qt3DRender::QLayer* m_activeGuiTag = nullptr;
+//    //Qt3DRender::QFilterKey* m_guiTechniqueFilterKey = nullptr;
+//}
+
 void Qt3DWindow::createAspectEngine()
 {
     _aspectEngine.reset(new Qt3DCore::QAspectEngine);

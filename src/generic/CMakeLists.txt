@@ -5,7 +5,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_library(AbstractorizerGeneric
     engine_widget.h
     imgui_manager.h
-)
+ "engine_spawner.h" "engine_widget_internal.h")
 
 set_target_properties(AbstractorizerGeneric PROPERTIES LINKER_LANGUAGE CXX)
 

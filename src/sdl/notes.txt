@@ -1,2 +1,2 @@
-https://github.com/tfcat/qt_sdl
+https://github.com/tfcat/qt_sdl : trying first
 https://github.com/killeand/Qt-SDL

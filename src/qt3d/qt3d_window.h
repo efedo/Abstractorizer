@@ -30,12 +30,22 @@ private:
     void createFramegraph();
     std::unique_ptr<Qt3DImguiManager> _guiMgr;
     std::unique_ptr<Qt3DCore::QAspectEngine> _aspectEngine;
-    Qt3DCore::QEntity *m_rootEntity = nullptr;
-    Qt3DRender::QCamera *m_sceneCamera = nullptr;
-    Qt3DRender::QCamera *m_guiCamera = nullptr;
-    Qt3DRender::QLayer *m_guiTag = nullptr;
-    Qt3DRender::QLayer *m_activeGuiTag = nullptr;
-    Qt3DRender::QFilterKey *m_guiTechniqueFilterKey = nullptr;
+
+    //std::unique_ptr<Qt3DCore::QEntity> m_rootEntity = nullptr;
+    //std::unique_ptr<Qt3DRender::QCamera> m_sceneCamera = nullptr;
+    //std::unique_ptr<Qt3DRender::QCamera> m_guiCamera = nullptr;
+    //std::unique_ptr<Qt3DRender::QLayer> m_guiTag = nullptr;
+    //std::unique_ptr<Qt3DRender::QLayer> m_activeGuiTag = nullptr;
+    //std::unique_ptr<Qt3DRender::QFilterKey> m_guiTechniqueFilterKey = nullptr;
+
+    Qt3DCore::QEntity* m_rootEntity = nullptr;
+    Qt3DRender::QCamera* m_sceneCamera = nullptr;
+    Qt3DRender::QCamera* m_guiCamera = nullptr;
+    Qt3DRender::QLayer* m_guiTag = nullptr;
+    Qt3DRender::QLayer* m_activeGuiTag = nullptr;
+    Qt3DRender::QFilterKey* m_guiTechniqueFilterKey = nullptr;
+
+
     Qt3DRender::QLayer* guiTag() const { return m_guiTag; }
     Qt3DRender::QLayer* activeGuiTag() const { return m_activeGuiTag; }
     Qt3DRender::QFilterKey* guiTechniqueFilterKey() const { return m_guiTechniqueFilterKey; }

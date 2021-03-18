@@ -8,43 +8,38 @@
 #include <Magnum/GL/DefaultFramebuffer.h>
 #include <Magnum/GL/Mesh.h>
 #include <Magnum/Math/Color.h>
-//#include <Magnum/Platform/Sdl2Application.h>
 #include <Magnum/Shaders/VertexColor.h>
-
-/* If your application is using anything from QtGui, you might get warnings
-   about GLEW and errors regarding GLclampf. If that's the case, uncomment the
-   following and place it as early as possible (but again *after* including
-   Magnum GL headers) */
-//typedef GLfloat GLclampf;
-//#undef __glew_h__ /* shh, Qt, shh */
-//#undef __GLEW_H__
-//#include <QtGui/qopenglfunctions.h>
-
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QOpenGLWidget>
+#include <Magnum/GL/Renderer.h>
+#include <Magnum/Math/Matrix4.h>
+#include <Magnum/MeshTools/Compile.h>
+#include <Magnum/MeshTools/Interleave.h>
+#include <Magnum/MeshTools/CompressIndices.h>
+#include <Magnum/Platform/Sdl2Application.h>
+#include <Magnum/Primitives/Cube.h>
+#include <Magnum/Shaders/Phong.h>
+#include <Magnum/Trade/MeshData.h>
+#include <memory>
+#include "../generic/engine_widget_internal.h"
 
-//namespace Magnum {
-//    namespace GL {
-//        class Mesh;
-//    }
-//    namespace Platform {
-//        class GLContext;
-//    }
-//    namespace Shaders {
-//        class VertexColor2D;
-//    }
-//}
+struct TriangleVertex {
+    Magnum::Vector3 position;
+    Magnum::Color3 color;
+};
 
-class MagnumWidgetInternal : public QOpenGLWidget {
+class MagnumWidgetInternal : public EngineWidgetInternal {
 public:
-    explicit MagnumWidgetInternal(QWidget* parent, Qt::WindowFlags f = nullptr);
-
-private:
+    MagnumWidgetInternal();
+protected:
+    void initializeGfx();
+    void addCube(Magnum::Vector3 lowpos, Magnum::Color3 color, float size);
     void initializeTriangle();
-    void initializeGL() override;
-    void paintGL() override;
-
-    Magnum::Platform::GLContext * _context;
-    Magnum::GL::Mesh* _mesh;
-    Magnum::Shaders::VertexColor2D* _shader;
+    std::unique_ptr<Magnum::GL::Mesh> _mesh;
+    std::unique_ptr<Magnum::Shaders::VertexColor3D> _shader; //Shaders::Phong
+    std::unique_ptr<Magnum::GL::Buffer> _buffer;
+    Magnum::Matrix4 _transformation;
+    Magnum::Matrix4 _projection;
+    //Magnum::Color3 _color;
+    //std::vector<TriangleVertex> vertices;
 };

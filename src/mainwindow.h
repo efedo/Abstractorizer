@@ -15,7 +15,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 private:
-    template <class EngType>
+    template <class EngType, bool Relaunch>
     void _addWindowTab(const std::string & name);
     Ui::MainWindow *ui;
 };
