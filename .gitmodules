@@ -4,3 +4,6 @@
 [submodule "lib/WickedEngine"]
 	path = lib/WickedEngine
 	url = https://github.com/efedo/WickedEngine
+[submodule "lib/godot"]
+	path = lib/godot
+	url = https://github.com/godotengine/godot
