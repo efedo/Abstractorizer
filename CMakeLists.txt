@@ -11,7 +11,7 @@ include(${UTILOGENY_DIR}/cmake/setup_project.cmake)
 pre_project_boilerplate(NAME "Abstractorizer")
 
 project(Abstractorizer VERSION 0.1
-                  DESCRIPTION "A project to compare nested graphics engines in a Qt window"
+                  DESCRIPTION "Compare embedded graphics/game engines in Qt"
                   LANGUAGES CXX)
 				  
 post_project_boilerplate(NAME "Abstractorizer")

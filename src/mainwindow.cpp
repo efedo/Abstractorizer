@@ -1,33 +1,45 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include <thread>
 
-#include "generic/engine_widget.h"
-#include "generic/engine_spawner.h"
+//#include "ui_mainwindow.h"
+#include "mainwindow.h"
+
+#include "backends/generic/engine_widget.h"
+#include "backends/generic/engine_spawner.h"
 
 #ifdef USE_QT3D
-#include "qt3d/qt3d_widget.h"
+#include "backends/qt3d/qt3d_widget.h"
 #endif
 
 #ifdef USE_MAGNUM
-#include "magnum/magnum_widget.h"
+#include "backends/magnum/magnum_widget.h"
 #endif
 
 #ifdef USE_SDL
-#include "sdl/sdlwidget.h"
+#include "backends/sdl/sdl_widget.h"
 #endif
 
 #ifdef USE_WICKED
-#include "wicked/wicked_widget.h"
+#include "backends/wicked/wicked_widget.h"
+#endif
+
+#ifdef USE_TINY_RENDERER
+#include "backends/tinyrenderer/tinyrenderer_widget.h"
 #endif
 
 #include <QLabel>
 #include <QProcess>
 
+MainWindow* MainWindow::ptr = 0;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    this->setWindowTitle("Abstractorizer");
+    tabWidget = new QTabWidget;
+    this->setCentralWidget(tabWidget);
+
+    if (ptr) throw;
+    ptr = this;
 
     #ifdef USE_QT3D
     _addWindowTab<Qt3DWidget, false>("Qt3D");
@@ -38,31 +50,19 @@ MainWindow::MainWindow(QWidget *parent)
     #endif
 
     #ifdef USE_MAGNUM
-    #ifdef USE_SDL
-    _addWindowTab<MagnumWidgetSDL, true>("Magnum/SDL");
-    #else
-    _addWindowTab<MagnumWidgetOGL>("Magnum/OGL");
-    #endif // USE_SDL
+    _addWindowTab<MagnumWidget, true>("Magnum");
     #endif
 
     #ifdef USE_WICKED
-    _addWindowTab<WickedWidgetWindows, false>("Wicked/Native");
+    _addWindowTab<WickedWidgetWindows, false>("Wicked");
     #endif
 
-    //#ifdef USE_UNREAL
-    //QString program = "C:/Users/ericf/Documents/Unreal Projects/NewTestGame/Saved/StagedBuilds/WindowsNoEditor/NewTestGame/Binaries/Win64/NewTestGame.exe";
-    //QStringList arguments;
-    //QProcess* myProcess = new QProcess(this);
-    //myProcess->start(program, arguments);
-    //#endif
-
-    //Urho3D::SharedPtr<Urho3D::Context> context = new Urho3D::Context();
-    //Urho3DWidgetInternal * = new Urho3DWidgetInternal(context.Get(), this);
-    //w->Setup();
-    //w->Start();
+    #ifdef USE_TINY_RENDERER
+    _addWindowTab<TinyRendererWidget, true>("TinyRenderer");
+    #endif
 }
 
-class EngineTabBase : public QTabWidget {
+class EngineTabBase : public QWidget {
 public:
     std::unique_ptr<EngineSpawnerBase> spawner;
     std::unique_ptr<EngineWidget> engine;
@@ -82,9 +82,15 @@ public:
         std::string labeltext = "Placeholder widget for " + name + " (created " + std::to_string(numplaceholders) + " times)";
         placeholderlabel.setText(QString::fromStdString(labeltext));
         mylayout.addWidget(&placeholderlabel);
+        placeholderlabel.show();
     }
 
-    void hideEvent(QHideEvent * hideevent) override {
+    void hideEvent(QHideEvent* hideevent) override {
+        hide();
+        QWidget::hideEvent(hideevent);
+    }
+
+    void hide() {
         if (engine) {
             engine.reset();
             mylayout.removeWidget(engine.get());
@@ -93,18 +99,46 @@ public:
         else {
             std::cerr << "Error: engine " << name << " not running?\n";
         }
-        QTabWidget::hideEvent(hideevent);
         std::cout << "Hiding engine tab: " << name << "\n";
     }
 
-    void showEvent(QShowEvent* showevent) override {
+    void showEvent(QShowEvent* showevent) override {       
+        show();
+        QWidget::showEvent(showevent);
+
+        // Reset (in vain on Windows) the main window as the active window
+        // after a call to createWindowContainer
+        MainWindow::ptr->setWindowState(Qt::WindowActive);
+        this->setFocus();
+
+        // Maximizing the window seems to reliably grab focus
+        MainWindow::ptr->showMaximized();
+        MainWindow::ptr->showNormal();
+
+        // Try (in vain on Windows) to get the main window to repaint
+        // (needed to cover up artifacts after window containerization)
+        MainWindow::ptr->update(); // Doesn't actually repaint (at least on Windows)
+        MainWindow::ptr->repaint(); // Doesn't actually repaint???? (at least on Windows)
+
+        // Changing the window size seems to lead to a reliable repaint
+        int oldw = MainWindow::ptr->size().width();
+        int oldh = MainWindow::ptr->size().height();
+        MainWindow::ptr->resize(oldw + 1, oldh + 1);
+        MainWindow::ptr->resize(oldw, oldh);
+    }
+
+    //QLabel blah;
+
+    void show() {
         if (spawner) {
             if (!engine) {
                 if (!spawner->alreadyLaunched || spawner->allowRelaunch()) {
-                    engine.swap(spawner->spawn(this));
+                    engine.swap(spawner->spawn(this));     
+                    // The order in which these QLayout changes are made is critical
+                    // for some bizarre reason
                     placeholderlabel.setText("Deleting placeholder");
-                    mylayout.removeWidget(&placeholderlabel);
                     mylayout.addWidget(engine.get());
+                    placeholderlabel.hide(); // Qt is                   
                 }
                 else {
                     placeholderlabel.setText(QString::fromStdString("Cannot respawn engine " + name + " (can only be initialized once per application)"));
@@ -118,7 +152,7 @@ public:
         else {
             std::cerr << "Error: no spawner for engine " << name << "?\n";
         }
-        QTabWidget::showEvent(showevent);
+
         std::cout << "Showing engine tab: " << name << "\n";
     }
 };
@@ -133,21 +167,11 @@ public:
 
 template <class EngType, bool Relaunch>
 void MainWindow::_addWindowTab(const std::string& name) {
-    //QGridLayout* layout = new QGridLayout;
     EngineTab<EngType, Relaunch>* newTab = new EngineTab<EngType, Relaunch>(name);
-    int index = ui->tabWidget->addTab(newTab, name.c_str());
-    ui->tabWidget->setTabEnabled(index, true);
-    //newTab->setLayout(layout);
-    //EngType* widgetPtr = new EngType(newTab);
-    //widgetPtr->resize(1280, 720);
-    //layout->addWidget(widgetPtr, 0, 0);
-    //newTab->show();
-    //widgetPtr->show();
-    //return newTab->engine;
+    int index = tabWidget->addTab(newTab, name.c_str());
+    tabWidget->setTabEnabled(index, true);
 }
 
 MainWindow::~MainWindow()
-{
-    delete ui;
-}
+{}
 

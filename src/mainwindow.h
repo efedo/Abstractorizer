@@ -1,12 +1,12 @@
 #pragma once
 
 #include <QMainWindow>
-
+#include <QGridLayout>
 class EngineWidget;
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+//QT_BEGIN_NAMESPACE
+//namespace Ui { class MainWindow; }
+//QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -14,8 +14,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    static MainWindow* ptr;
 private:
     template <class EngType, bool Relaunch>
     void _addWindowTab(const std::string & name);
-    Ui::MainWindow *ui;
+    //QGridLayout* gridWidget;
+    QTabWidget* tabWidget;
+    //Ui::MainWindow *ui;
 };
