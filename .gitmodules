@@ -7,3 +7,9 @@
 [submodule "lib/godot"]
 	path = lib/godot
 	url = https://github.com/godotengine/godot
+[submodule "lib/ogre"]
+	path = lib/ogre
+	url = https://github.com/OGRECave/ogre
+[submodule "lib/ogre-next"]
+	path = lib/ogre-next
+	url = https://github.com/OGRECave/ogre-next
