@@ -13,3 +13,21 @@
 [submodule "lib/ogre-next"]
 	path = lib/ogre-next
 	url = https://github.com/OGRECave/ogre-next
+[submodule "lib/zauonlok_renderer"]
+	path = lib/zauonlok_renderer
+	url = https://github.com/zauonlok/renderer
+[submodule "lib/imgui"]
+	path = lib/imgui
+	url = https://github.com/ocornut/imgui
+[submodule "lib/bgfx_cmake"]
+	path = lib/bgfx_cmake
+	url = https://github.com/widberg/bgfx.cmake
+[submodule "lib/lvgl"]
+	path = lib/lvgl
+	url = https://github.com/littlevgl/lvgl
+[submodule "lib/lv_examples"]
+	path = lib/lv_examples
+	url = https://github.com/littlevgl/lv_examples
+[submodule "lib/lv_drivers"]
+	path = lib/lv_drivers
+	url = https://github.com/littlevgl/lv_drivers
