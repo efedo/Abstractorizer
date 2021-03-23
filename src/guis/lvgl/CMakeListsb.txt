@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.14)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+add_library(AbstractorizerLVGL
+	main.c
+	mouse_cursor_icon.c
+)
+	 
+target_include_qt(TARGET AbstractorizerLVGL COMPONENTS ${QT_LIBRARIES_REQUIRED})
+target_link_sdl2(AbstractorizerLVGL)

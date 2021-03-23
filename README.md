@@ -1,9 +1,16 @@
 *** Currently in early testing!!! ***
 
+Qt used to be the go-to GUI for cross-platform desktop application development, but recent license
+changes and policy decisions have reduced its appeal. This is particularly true for 3D applications 
+with the unofficial abandonment of Qt3D and omission of Qt3D binary libraries in Qt6. (Who wants to 
+compile Qt from source)
+
+Abstractorizer is a project to compare alternatives 
+
+
 Everyone and their dog is developing an open source 3D graphics/game engine these days. Some will last,
 most won't. 
 
-Meanwhile, desktop 3D capabilities in Qt have regressed with the unofficial abandonment of Qt3D.
 So what do you do if you need to build a cross-platform desktop application with a 3D view and do not want to
 roll you own OpenGL/DirectX/Vulkan/Metal code? Should you try to embed an existing engine and, if so, which one?
 
@@ -15,7 +22,7 @@ should run on CopperSpice with minimal tinkering (not yet tested!).
 
 Eventually, it may have a standard interface/test suite, allowing identical tests to be run in different engines,
 and making it less painful to switch between them, or to gradually replace Qt in your application with an 
-embedded GUI, such as ImGui.
+embedded GUI, such as Dear ImGui.
 
 Contributions are very welcome, especially if you would like to help speed inclusion of a specific engine!
 

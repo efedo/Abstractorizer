@@ -11,6 +11,8 @@ option(INCLUDE_OGRE "Include OGRE (classic)" ON)
 option(INCLUDE_OGRE_NEXT "Include OGRE-next" ON)
 option(INCLUDE_TINY_RENDERER "Include tinyrenderer" ON)
 
+option(INCLUDE_LVGL "Include LVGL gui library" ON)
+
 include(${UTILOGENY_DIR}/cmake/cppmake.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_sdl.cmake)
@@ -91,6 +93,12 @@ if(INCLUDE_TINY_RENDERER)
 	add_compile_definitions(USE_TINY_RENDERER)
 	add_subdirectory(backends/tinyrenderer)
 	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerTinyRenderer)
+endif()
+
+if(INCLUDE_LVGL)
+	add_compile_definitions(USE_LVGL)
+	add_subdirectory(guis/lvgl)
+	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerLVGL)
 endif()
 
 target_link_qt(TARGET AbstractorizerGUI COMPONENTS ${QT_LIBRARIES_REQUIRED})

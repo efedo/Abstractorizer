@@ -3,3 +3,22 @@ git submodule add "https://github.com/efedo/WickedEngine" lib/WickedEngine
 
 To update submodules to latest commit:
 git submodule update --remote --merge
+
+done:
+git submodule add "https://github.com/OGRECave/ogre-next" lib/ogre-next
+git submodule add "https://github.com/zauonlok/renderer" lib/zauonlok_renderer
+git submodule add "https://github.com/ocornut/imgui" lib/imgui
+git submodule add "https://github.com/widberg/bgfx.cmake" lib/bgfx_cmake
+git submodule add "https://github.com/littlevgl/lvgl" lib/lvgl
+git submodule add "https://github.com/littlevgl/lv_examples" lib/lv_examples
+git submodule add "https://github.com/littlevgl/lv_drivers" lib/lv_drivers
+
+todo:
+
+
+maybe:
+git submodule add "https://github.com/Immediate-Mode-UI/Nuklear" lib/nuklear
+git submodule add "https://github.com/dalerank/nanogui-sdl" lib/nanogui-sdl
+https://github.com/mitsuba-renderer/nanogui
+
+https://coderwall.com/p/csriig/remove-a-git-submodule
