@@ -1,3 +1,5 @@
+# (c) 2021 Eric Fedosejevs and contributors. Licensed under MIT license (see LICENSE for details)
+
 cmake_minimum_required(VERSION 3.14)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

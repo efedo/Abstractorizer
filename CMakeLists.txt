@@ -1,5 +1,4 @@
-# Copyright 2021 Eric Fedosejevs
-#
+# (c) 2021 Eric Fedosejevs and contributors. Licensed under MIT license (see LICENSE for details)
 
 cmake_minimum_required(VERSION 3.15)
 

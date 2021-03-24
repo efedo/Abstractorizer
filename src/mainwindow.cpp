@@ -1,3 +1,5 @@
+// (c) 2021 Eric Fedosejevs and contributors. Licensed under MIT license (see LICENSE for details)
+
 #include <thread>
 
 //#include "ui_mainwindow.h"
