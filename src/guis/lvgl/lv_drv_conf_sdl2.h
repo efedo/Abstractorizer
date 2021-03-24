@@ -1,6 +1,6 @@
-﻿/**
+/**
  * @file lv_drv_conf.h
- * Configuration file for v7.10.1
+ *
  */
 
 /*
@@ -83,7 +83,7 @@
  *  Monitor of PC
  *-------------------*/
 #ifndef USE_MONITOR
-#  define USE_MONITOR         0
+#  define USE_MONITOR         1
 #endif
 
 #if USE_MONITOR
@@ -98,7 +98,10 @@
 #  define MONITOR_DOUBLE_BUFFERED 0
 
 /*Eclipse: <SDL2/SDL.h>    Visual Studio: <SDL.h>*/
-#  define MONITOR_SDL_INCLUDE_PATH    <SDL2/SDL.h>
+#  define MONITOR_SDL_INCLUDE_PATH    <SDL.h>
+
+/*Different rendering might be used if running in a Virtual machine*/
+#  define MONITOR_VIRTUAL_MACHINE 0
 
 /*Open two windows to test multi display support*/
 #  define MONITOR_DUAL            0
@@ -111,16 +114,10 @@
 #  define USE_WINDOWS       0
 #endif
 
+#define USE_WINDOWS         0
 #if USE_WINDOWS
 #  define WINDOW_HOR_RES      480
 #  define WINDOW_VER_RES      320
-#endif
-
-/*----------------------------
- *  Native Windows (win32drv)
- *---------------------------*/
-#ifndef USE_WIN32DRV
-#  define USE_WIN32DRV       1
 #endif
 
 /*----------------------------------------
@@ -335,7 +332,7 @@
  * Mouse or touchpad on PC (using SDL)
  *-------------------------------------*/
 #ifndef USE_MOUSE
-#  define USE_MOUSE           0
+#  define USE_MOUSE           1
 #endif
 
 #if USE_MOUSE
@@ -346,7 +343,7 @@
  * Mousewheel as encoder on PC (using SDL)
  *------------------------------------------*/
 #ifndef USE_MOUSEWHEEL
-#  define USE_MOUSEWHEEL      0
+#  define USE_MOUSEWHEEL      1
 #endif
 
 #if USE_MOUSEWHEEL
@@ -393,7 +390,7 @@
  *   Keyboard of a PC (using SDL)
  *------------------------------*/
 #ifndef USE_KEYBOARD
-#  define USE_KEYBOARD        0
+#  define USE_KEYBOARD        1
 #endif
 
 #if USE_KEYBOARD

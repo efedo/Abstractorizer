@@ -1,15 +1,13 @@
-
-/**
- * @file main
- *
- */
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*********************
  *      INCLUDES
  *********************/
 #define _DEFAULT_SOURCE /* needed for usleep() */
 #include <stdlib.h>
-#include <unistd.h>
+//#include <unistd.h>
 #define SDL_MAIN_HANDLED /*To fix SDL's "undefined reference to WinMain" \
                             issue*/
 #include <SDL.h>
@@ -18,7 +16,12 @@
 #include "lv_drivers/indev/mouse.h"
 #include "lv_drivers/indev/keyboard.h"
 #include "lv_drivers/indev/mousewheel.h"
-#include "lv_examples/lv_examples.h"
+#include "lv_examples/lv_demo.h"
+
+#ifdef __cplusplus
+}
+#endif
+
 
 /*********************
  *      DEFINES
@@ -33,7 +36,7 @@
  **********************/
 static void hal_init(void);
 static int tick_thread(void *data);
-static void memory_monitor(lv_task_t *param);
+//static void memory_monitor(lv_task_t *param);
 
 /**********************
  *  STATIC VARIABLES
@@ -47,17 +50,14 @@ lv_indev_t *kb_indev;
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-
-int main(int argc, char **argv)
+//int lvglmain()
+int lvglmain()
 {
-  (void)argc; /*Unused*/
-  (void)argv; /*Unused*/
-
   /*Initialize LVGL*/
   lv_init();
 
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
-  hal_init();
+  //hal_init();
 
   lv_demo_widgets();
 //  lv_demo_printer();
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
     lv_task_handler();
-    usleep(5 * 1000);
+    //usleep(5 * 1000);
   }
 
   return 0;
@@ -85,14 +85,15 @@ static void hal_init(void) {
   monitor_init();
 
   /*Create a display buffer*/
-  static lv_disp_buf_t disp_buf1;
+  static lv_disp_draw_buf_t disp_buf1; // static lv_disp_buf_t disp_buf1;
   static lv_color_t buf1_1[LV_HOR_RES_MAX * 120];
   lv_disp_buf_init(&disp_buf1, buf1_1, NULL, LV_HOR_RES_MAX * 120);
 
   /*Create a display*/
   lv_disp_drv_t disp_drv;
   lv_disp_drv_init(&disp_drv); /*Basic initialization*/
-  disp_drv.buffer = &disp_buf1;
+  disp_drv.draw_buf = &disp_buf1;
+  //disp_drv.buffer = &disp_buf1;
   disp_drv.flush_cb = monitor_flush;
   lv_disp_drv_register(&disp_drv);
 
@@ -135,7 +136,9 @@ static void hal_init(void) {
   /* Optional:
    * Create a memory monitor task which prints the memory usage in
    * periodically.*/
-  lv_task_create(memory_monitor, 5000, LV_TASK_PRIO_MID, NULL);
+
+  //lv_task_t* lv_task_create(lv_task_cb_t task_xcb, uint32_t period, lv_task_prio_t prio, void* user_data);
+  //lv_task_create(memory_monitor, 5000, LV_TASK_PRIO_MID, NULL);
 }
 
 /**
@@ -158,12 +161,12 @@ static int tick_thread(void *data) {
  * Print the memory usage periodically
  * @param param
  */
-static void memory_monitor(lv_task_t *param) {
-  (void)param; /*Unused*/
-
-  lv_mem_monitor_t mon;
-  lv_mem_monitor(&mon);
-  printf("used: %6d (%3d %%), frag: %3d %%, biggest free: %6d\n",
-         (int)mon.total_size - mon.free_size, mon.used_pct, mon.frag_pct,
-         (int)mon.free_biggest_size);
-}
+//static void memory_monitor(lv_task_cb_t *param) {
+//  (void)param; /*Unused*/
+//
+//  lv_mem_monitor_t mon;
+//  lv_mem_monitor(&mon);
+//  printf("used: %6d (%3d %%), frag: %3d %%, biggest free: %6d\n",
+//         (int)mon.total_size - mon.free_size, mon.used_pct, mon.frag_pct,
+//         (int)mon.free_biggest_size);
+//}

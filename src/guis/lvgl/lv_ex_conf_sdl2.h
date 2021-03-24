@@ -1,13 +1,7 @@
-﻿/**
+/**
  * @file lv_ex_conf.h
- * Configuration file for v7.10.0
  *
  */
-/*
- * COPY THIS FILE AS lv_ex_conf.h
- */
-
-#if 1 /*Set it to "1" to enable the content*/
 
 #ifndef LV_EX_CONF_H
 #define LV_EX_CONF_H
@@ -27,7 +21,7 @@
 /*Show some widget*/
 #define LV_USE_DEMO_WIDGETS        1
 #if LV_USE_DEMO_WIDGETS
-#define LV_DEMO_WIDGETS_SLIDESHOW  1
+#define LV_DEMO_WIDGETS_SLIDESHOW  0
 #endif
 
 /*Printer demo, optimized for 800x480*/
@@ -43,12 +37,10 @@
 #define LV_USE_DEMO_STRESS      1
 
 /*Music player for LVGL*/
-#define LV_USE_DEMO_MUSIC      1
+#define LV_USE_DEMO_MUSIC      0
 #if LV_USE_DEMO_MUSIC
 #define LV_DEMO_MUSIC_AUTO_PLAY 0
 #endif
 
 #endif /*LV_EX_CONF_H*/
-
-#endif /*End of "Content enable"*/
 

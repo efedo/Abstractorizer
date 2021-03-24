@@ -17,8 +17,8 @@ include(${UTILOGENY_DIR}/cmake/cppmake.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_sdl.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_magnum.cmake)
-include(${UTILOGENY_DIR}/cmake/target_add_urho3d.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_wicked.cmake)
+include(${UTILOGENY_DIR}/cmake/target_add_lvgl.cmake)
 
 add_executable(AbstractorizerGUI
 	main.cpp
@@ -98,7 +98,7 @@ endif()
 if(INCLUDE_LVGL)
 	add_compile_definitions(USE_LVGL)
 	add_subdirectory(guis/lvgl)
-	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerLVGL)
+	#target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerLVGL)
 endif()
 
 target_link_qt(TARGET AbstractorizerGUI COMPONENTS ${QT_LIBRARIES_REQUIRED})

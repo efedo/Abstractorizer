@@ -26,6 +26,10 @@
 #include "backends/tinyrenderer/tinyrenderer_widget.h"
 #endif
 
+#ifdef USE_LVGL
+#include "guis/lvgl/simulator.h"
+#endif
+
 #include <QLabel>
 #include <QProcess>
 
@@ -59,6 +63,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     #ifdef USE_TINY_RENDERER
     _addWindowTab<TinyRendererWidget, true>("TinyRenderer");
+    #endif
+
+    #ifdef USE_LVGL
+    //lvglmain();
     #endif
 }
 
