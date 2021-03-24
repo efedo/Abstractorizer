@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
+include_directories("${PROJECT_SOURCE_DIR}/lib/")
+include_directories("${PROJECT_SOURCE_DIR}/lib/lvgl")
+
 add_executable(lvgl_qt_widgets
   main.cpp
   LvglGraphicsView.cpp
@@ -8,10 +11,12 @@ add_executable(lvgl_qt_widgets
   MainWindow.hpp
   MainWindow.ui
 )
-target_include_directories(lvgl_qt_widgets
-  PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}
-)
+
+# target_include_directories(lvgl_qt_widgets
+  # PUBLIC
+    # ${CMAKE_CURRENT_LIST_DIR}
+# )
+
 target_link_libraries(lvgl_qt_widgets
   PRIVATE
     lv_examples

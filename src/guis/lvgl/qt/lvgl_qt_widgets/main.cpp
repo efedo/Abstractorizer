@@ -1,6 +1,9 @@
 // 3rd Party
 #include <QApplication>
-#include <lv_examples/lv_examples.h>
+
+extern "C" {
+	#include <lv_examples/lv_examples.h>
+}
 
 // Local
 #include "LvglRenderer.hpp"

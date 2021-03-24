@@ -97,7 +97,10 @@ endif()
 
 if(INCLUDE_LVGL)
 	add_compile_definitions(USE_LVGL)
-	add_subdirectory(guis/lvgl)
+	
+	# waiting on resolution/workaround for MSVC compiler bug # 1380599
+	
+	#add_subdirectory(guis/lvgl)
 	#target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerLVGL)
 endif()
 

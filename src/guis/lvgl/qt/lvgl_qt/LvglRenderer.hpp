@@ -1,14 +1,23 @@
 #ifndef LVGLRENDERER_HPP
 #define LVGLRENDERER_HPP
 
+// 3rd Party
+#include <QImage>
+#include <QPixmap>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Standard
 #include <cstddef>
 #include <cstdint>
 
-// 3rd Party
-#include <QImage>
-#include <QPixmap>
-#include <lvgl/lvgl.h>
+//#include <lvgl/lvgl.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #if (LV_COLOR_DEPTH == 32)
 #  define LVGL_SIM_QT_LVGL_RENDERER_IMAGE_FORMAT (QImage::Format_ARGB32)
@@ -25,18 +34,29 @@ public:
   static constexpr size_t         Max_Height           = LV_VER_RES_MAX;
   static constexpr size_t         Max_Width            = LV_HOR_RES_MAX;
 
-private:
-  lv_color_t    display_frame1_[Max_Width * Max_Height];
-  lv_color_t    display_frame2_[Max_Width * Max_Height];
-  lv_color_t    current_frame_[Max_Height][Max_Width];
-  lv_disp_buf_t display_buffer_;
-  lv_disp_drv_t display_driver_;
-  QImage        image_;
-
-public:
-  LvglRenderer();
-  void    flush(const lv_disp_drv_t* display_driver, const lv_area_t* area, const lv_color_t* colors) noexcept;
-  QPixmap pixmap() const;
+//private:
+//
+//  #ifdef __cplusplus
+//  extern "C" {
+//  #endif
+//
+//  lv_color_t    display_frame1_[Max_Width * Max_Height];
+//  lv_color_t    display_frame2_[Max_Width * Max_Height];
+//  lv_color_t    current_frame_[Max_Height][Max_Width];
+//  lv_disp_buf_t display_buffer_;
+//  lv_disp_drv_t display_driver_;
+//  
+//  #ifdef __cplusplus
+//  }
+//  #endif
+//
+//
+//  QImage        image_;
+//
+//public:
+//  LvglRenderer();
+//  void    flush(const lv_disp_drv_t* display_driver, const lv_area_t* area, const lv_color_t* colors) noexcept;
+//  QPixmap pixmap() const;
 };
 
 #endif  // LVGLRENDERER_HPP

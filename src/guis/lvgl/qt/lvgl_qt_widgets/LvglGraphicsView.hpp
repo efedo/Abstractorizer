@@ -3,7 +3,10 @@
 
 // 3rd Party
 #include <QGraphicsView>
-#include <lvgl/lvgl.h>
+
+extern "C" {
+	#include <lvgl/lvgl.h>
+}
 
 // Local
 #include "LvglRenderer.hpp"

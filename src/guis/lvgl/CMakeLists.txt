@@ -93,23 +93,21 @@ set_target_properties(lvgl PROPERTIES LINKER_LANGUAGE C)
 add_subdirectory(qt)
 # add_subdirectory(sdl)
 
-add_executable(AbstractorizerLVGL
-	# "simulator.c"
-	# "simulatorold.c"
-	
-	
-	
-	# "LVGL.Simulator.manifest"
-	"LVGL.Simulator.rc"
-	"LVGL.ico"
-	#"Mile.Project.Properties.h"
-	"lv_conf.h"
-	"lv_drv_conf.h"
-	"lv_ex_conf.h"
-	"resource.h"
-	#main.c"
-	#mouse_cursor_icon.c"
-	"simulator.h")
+# add_executable(AbstractorizerLVGL
+	# # "simulator.c"
+	# # "simulatorold.c"
+	# # "LVGL.Simulator.manifest"
+	# "LVGL.Simulator.rc"
+	# "LVGL.ico"
+	# #"Mile.Project.Properties.h"
+	# "lv_conf.h"
+	# "lv_drv_conf.h"
+	# "lv_ex_conf.h"
+	# "resource.h"
+	# #main.c"
+	# #mouse_cursor_icon.c"
+	# # "simulator.h"
+	# )
 
 # Bypass hard-coded config directories
 add_compile_definitions(LV_DEMO_CONF_PATH=${CMAKE_CURRENT_SOURCE_DIR}/lv_ex_conf.h)
@@ -118,10 +116,10 @@ add_compile_definitions(LV_DEMO_CONF_PATH=${CMAKE_CURRENT_SOURCE_DIR}/lv_ex_conf
 include_directories("${PROJECT_SOURCE_DIR}/lib/")
 include_directories("${PROJECT_SOURCE_DIR}/lib/lvgl")
 
-target_link_libraries(AbstractorizerLVGL PUBLIC lvgl)
+#target_link_libraries(AbstractorizerLVGL PUBLIC lvgl)
 
 #set_target_properties(AbstractorizerLVGL PROPERTIES LINKER_LANGUAGE CXX)
 	 
-target_include_qt(TARGET AbstractorizerLVGL COMPONENTS ${QT_LIBRARIES_REQUIRED})
+#target_include_qt(TARGET AbstractorizerLVGL COMPONENTS ${QT_LIBRARIES_REQUIRED})
 #target_link_lvgl(AbstractorizerLVGL)
-target_link_sdl2(AbstractorizerLVGL)
+#target_link_sdl2(AbstractorizerLVGL)
