@@ -3,8 +3,8 @@
 cmake_minimum_required(VERSION 3.15)
 
 # These are temporary and will be replaced with find_package eventually
-set(UTILOGENY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Utilogeny" CACHE STRING "Path to Utilogeny" FORCE)
-set(ABSTRACTORIZER_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE STRING "Path to Abstractorizer" FORCE)
+set(UTILOGENY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/Utilogeny" CACHE STRING "Path to Utilogeny")
+set(ABSTRACTORIZER_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE STRING "Path to Abstractorizer")
 include(${UTILOGENY_DIR}/cmake/setup_project.cmake)
 
 pre_project_boilerplate(NAME "Abstractorizer")
