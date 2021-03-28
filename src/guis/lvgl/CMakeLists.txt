@@ -17,7 +17,7 @@ file(GLOB_RECURSE LVGL_SOURCES "${PROJECT_SOURCE_DIR}/lib/lvgl/src/*.c")
 file(GLOB_RECURSE LVGL_DRIVER_SOURCES "${PROJECT_SOURCE_DIR}/lib/lv_drivers/src/*.c")
 file(GLOB_RECURSE LVGL_EXAMPLE_SOURCES "${PROJECT_SOURCE_DIR}/lib/lv_examples/src/*.c")
 
-write_file("examplesources.txt" "${LVGL_EXAMPLE_SOURCES}")
+#write_file("examplesources.txt" "${LVGL_EXAMPLE_SOURCES}")
 
 # some example sources do not current compile under MSVC, need to be selective
 

@@ -28,6 +28,3 @@
 [submodule "lib/lv_drivers"]
 	path = lib/lv_drivers
 	url = https://github.com/littlevgl/lv_drivers
-[submodule "lib/copperspice"]
-	path = lib/copperspice
-	url = https://github.com/copperspice/copperspice

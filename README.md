@@ -13,6 +13,34 @@ GUI library/3D engine.
 
 ---
 
+Build Instructions
+
+Optional dependencies:
+
+Qt
+Installed via vcpkg if required.
+
+CopperSpice
+Must be installed manually, no vcpkg/conan package available. Binaries available here: https://download.copperspice.com/copperspice/binary/
+
+ImGUI
+Bundled submodule.
+
+LVGL
+Bundled submodule.
+
+Magnum
+Installed via vcpkg if required.
+
+Godot
+Bundled submodule.
+
+Wicked Engine
+Bundled submodule.
+
+
+---
+
 To be considered for inclusion, a GUI library/3D engine should ideally:
 - Be cross-platform
 - Be useable as a library via a C++ API (either directly or with minimal tinkering)

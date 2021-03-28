@@ -2,8 +2,12 @@
 
 cmake_minimum_required(VERSION 3.15)
 
-# These are temporary and will be replaced with find_package eventually
-set(UTILOGENY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/Utilogeny" CACHE STRING "Path to Utilogeny")
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../Utilogeny/CMakeLists.txt")
+	set(UTILOGENY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Utilogeny" CACHE STRING "Path to Utilogeny")
+else()
+	set(UTILOGENY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/Utilogeny" CACHE STRING "Path to Utilogeny" FORCE)
+endif()
+
 set(ABSTRACTORIZER_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE STRING "Path to Abstractorizer")
 include(${UTILOGENY_DIR}/cmake/setup_project.cmake)
 

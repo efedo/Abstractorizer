@@ -4,6 +4,9 @@ git submodule add "https://github.com/efedo/WickedEngine" lib/WickedEngine
 To update submodules to latest commit:
 git submodule update --remote --merge
 
+To update/prune remote branches:
+git remote update origin --prune
+
 done:
 git submodule add "https://github.com/OGRECave/ogre-next" lib/ogre-next
 git submodule add "https://github.com/zauonlok/renderer" lib/zauonlok_renderer
@@ -14,6 +17,7 @@ git submodule add "https://github.com/littlevgl/lv_examples" lib/lv_examples
 git submodule add "https://github.com/littlevgl/lv_drivers" lib/lv_drivers
 
 todo:
+git submodule add "https://github.com/copperspice/copperspice" lib/copperspice
 
 
 maybe:

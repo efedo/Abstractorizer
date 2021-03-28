@@ -12,8 +12,8 @@ option(INCLUDE_WICKED "Include WickedEngine" OFF) # Currently disabled, WickedEn
 option(INCLUDE_OGRE "Include OGRE (classic)" ON)
 option(INCLUDE_OGRE_NEXT "Include OGRE-next" ON)
 option(INCLUDE_TINY_RENDERER "Include tinyrenderer" ON)
-
 option(INCLUDE_LVGL "Include LVGL gui library" ON)
+option(INCLUDE_COPPERSPICE "Include CopperSpice" ON)
 
 include(${UTILOGENY_DIR}/cmake/cppmake.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
@@ -21,6 +21,7 @@ include(${UTILOGENY_DIR}/cmake/target_add_sdl.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_magnum.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_wicked.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_lvgl.cmake)
+include(${UTILOGENY_DIR}/cmake/target_add_copperspice.cmake)
 
 add_executable(AbstractorizerGUI
 	main.cpp
@@ -104,6 +105,12 @@ if(INCLUDE_LVGL)
 	
 	#add_subdirectory(guis/lvgl)
 	#target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerLVGL)
+endif()
+
+if(INCLUDE_COPPERSPICE)
+	add_compile_definitions(USE_COPPERSPICE)
+	add_subdirectory(guis/copperspice)
+	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerCopperSpice)
 endif()
 
 target_link_qt(TARGET AbstractorizerGUI COMPONENTS ${QT_LIBRARIES_REQUIRED})
