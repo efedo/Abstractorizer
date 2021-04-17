@@ -9,5 +9,6 @@ add_library(AbstractorizerSDL
 	sdl_widget_internal.cpp
 	 "sdl_utils.h" "sdl_utils.cpp")
 
-target_include_qt(TARGET AbstractorizerSDL COMPONENTS ${QT_LIBRARIES_REQUIRED})
+target_include_qt_or_cs(AbstractorizerSDL)
 target_link_sdl2(AbstractorizerSDL)
+target_config_compiler(AbstractorizerSDL)

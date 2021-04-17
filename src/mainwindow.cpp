@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
     if (ptr) throw;
     ptr = this;
 
+    //_addWindowTab<EngineWidget, true>("Generic engine");
+
     #ifdef USE_QT3D
     _addWindowTab<Qt3DWidget, false>("Qt3D");
     #endif
@@ -77,22 +79,25 @@ public:
     std::unique_ptr<EngineSpawnerBase> spawner;
     std::unique_ptr<EngineWidget> engine;
     const std::string name;
-    QGridLayout mylayout;
-    QLabel placeholderlabel;
+    QGridLayout * mylayout;
+    QLabel * placeholderlabel;
     uint32_t numplaceholders = 0;
 
     EngineTabBase(const std::string newname) : name(newname) {
+        mylayout = new QGridLayout;
+        placeholderlabel = new QLabel;
         this->setObjectName(QString::fromStdString(name));
-        this->setLayout(&mylayout);
+        this->setLayout(mylayout);
+        mylayout->addWidget(placeholderlabel);
         showplaceholder();
     }
 
     void showplaceholder() {
         ++numplaceholders;
         std::string labeltext = "Placeholder widget for " + name + " (created " + std::to_string(numplaceholders) + " times)";
-        placeholderlabel.setText(QString::fromStdString(labeltext));
-        mylayout.addWidget(&placeholderlabel);
-        placeholderlabel.show();
+        placeholderlabel->setText(QString::fromStdString(labeltext));
+        //mylayout->addWidget(placeholderlabel);
+        placeholderlabel->show();
     }
 
     void hideEvent(QHideEvent* hideevent) override {
@@ -103,7 +108,7 @@ public:
     void hide() {
         if (engine) {
             engine.reset();
-            mylayout.removeWidget(engine.get());
+            //mylayout->removeWidget(engine.get());
             showplaceholder();
         }
         else {
@@ -146,13 +151,13 @@ public:
                     engine.swap(spawner->spawn(this));     
                     // The order in which these QLayout changes are made is critical
                     // for some bizarre reason
-                    placeholderlabel.setText("Deleting placeholder");
-                    mylayout.addWidget(engine.get());
-                    placeholderlabel.hide(); // Qt is                   
+                    placeholderlabel->setText("Deleting placeholder");
+                    mylayout->addWidget(engine.get());
+                    placeholderlabel->hide(); // Qt is                   
                 }
                 else {
-                    placeholderlabel.setText(QString::fromStdString("Cannot respawn engine " + name + " (can only be initialized once per application)"));
-                    mylayout.addWidget(&placeholderlabel);
+                    placeholderlabel->setText(QString::fromStdString("Cannot respawn engine " + name + " (can only be initialized once per application)"));
+                    //mylayout->addWidget(placeholderlabel);
                 }
             }
             else {
@@ -178,7 +183,8 @@ public:
 template <class EngType, bool Relaunch>
 void MainWindow::_addWindowTab(const std::string& name) {
     EngineTab<EngType, Relaunch>* newTab = new EngineTab<EngType, Relaunch>(name);
-    int index = tabWidget->addTab(newTab, name.c_str());
+    QString tabName(name.c_str());
+    int index = tabWidget->addTab(newTab, tabName);
     tabWidget->setTabEnabled(index, true);
 }
 

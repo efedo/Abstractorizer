@@ -9,5 +9,5 @@ add_library(AbstractorizerOgreNext
 	ogrenext_widget_internal.cpp
 )
 
-target_include_qt(TARGET AbstractorizerOgreNext COMPONENTS ${QT_LIBRARIES_REQUIRED})
+target_include_qt_or_cs(AbstractorizerOgreNext)
 target_link_sdl2(AbstractorizerOgreNext)

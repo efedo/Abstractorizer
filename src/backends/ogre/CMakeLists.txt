@@ -9,5 +9,5 @@ add_library(AbstractorizerOgre
 	ogre_widget_internal.cpp
 )
 
-target_include_qt(TARGET AbstractorizerOgre COMPONENTS ${QT_LIBRARIES_REQUIRED})
+target_include_qt_or_cs(AbstractorizerOgre)
 target_link_sdl2(AbstractorizerOgre)

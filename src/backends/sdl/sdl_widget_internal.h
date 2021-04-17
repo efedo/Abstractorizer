@@ -12,7 +12,10 @@ class SDLWidgetInternal : public EngineWidgetInternal
 public:
     SDLWidgetInternal();
     virtual ~SDLWidgetInternal() override;
+    void initSDLvideo();
+#ifdef USE_QT
 public slots:
+#endif // USE_QT
     void SDLRepaint();
 protected:
     SDL_Window* sdlwindow;

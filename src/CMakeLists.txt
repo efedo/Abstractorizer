@@ -4,7 +4,10 @@ cmake_minimum_required(VERSION 3.14)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(FIND_HINTS_COPPERSPICE "C:/CopperSpice/cmake/CopperSpice")
 option(PRINT_INCLUDE_TARGET_DIRS "Debug info for package targets/includes" OFF)
+option(INCLUDE_QT "Include Qt" ON)
+option(INCLUDE_COPPERSPICE "Include CopperSpice" OFF)
 option(INCLUDE_QT3D "Include Qt3D" ON)
 option(INCLUDE_SDL "Include SDL" ON)
 option(INCLUDE_MAGNUM "Include Magnum engine" OFF)
@@ -13,23 +16,35 @@ option(INCLUDE_OGRE "Include OGRE (classic)" ON)
 option(INCLUDE_OGRE_NEXT "Include OGRE-next" ON)
 option(INCLUDE_TINY_RENDERER "Include tinyrenderer" ON)
 option(INCLUDE_LVGL "Include LVGL gui library" ON)
-option(INCLUDE_COPPERSPICE "Include CopperSpice" ON)
+
+# Check option validity and setup qt/copperspice
+if (INCLUDE_QT AND INCLUDE_COPPERSPICE)
+	message(FATAL_ERROR "Cannot simultaneously include both Qt and Copperspice due to conflicting namespaces")
+elseif(NOT INCLUDE_QT AND NOT INCLUDE_COPPERSPICE)
+	message(FATAL_ERROR "Must include either Qt and Copperspice as window manager")
+elseif(NOT INCLUDE_QT AND INCLUDE_QT3D)
+	message(FATAL_ERROR "Cannot include Qt3D without also including Qt")
+elseif(INCLUDE_QT)
+	add_compile_definitions(USE_QT)
+	set(QT_LIBRARIES_REQUIRED Core Gui Widgets Network Gamepad Concurrent PrintSupport WinExtras)
+	include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
+elseif(INCLUDE_COPPERSPICE)
+	add_compile_definitions(USE_COPPERSPICE)
+	set(COPPERSPICE_LIBRARIES_REQUIRED CsCore CsGui)
+	include(${UTILOGENY_DIR}/cmake/target_add_copperspice.cmake)
+endif()
 
 include(${UTILOGENY_DIR}/cmake/cppmake.cmake)
-include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_sdl.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_magnum.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_wicked.cmake)
 include(${UTILOGENY_DIR}/cmake/target_add_lvgl.cmake)
-include(${UTILOGENY_DIR}/cmake/target_add_copperspice.cmake)
 
 add_executable(AbstractorizerGUI
 	main.cpp
 	mainwindow.h
 	mainwindow.cpp
-)
-
-#mainwindow.ui
+ "platforms.h")
 
 set_target_properties(AbstractorizerGUI PROPERTIES
             CXX_STANDARD ${OVERRIDE_CXX_STANDARD}
@@ -38,11 +53,32 @@ set_target_properties(AbstractorizerGUI PROPERTIES
 
 #target_precompile_headers(AbstractorizerGUI PRIVATE qtprecomp.h)
 
+macro(target_include_qt_or_cs target)
+	if(INCLUDE_QT)
+		include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
+		target_include_qt(TARGET ${target} COMPONENTS ${QT_LIBRARIES_REQUIRED})
+	elseif(INCLUDE_COPPERSPICE)
+		include(${UTILOGENY_DIR}/cmake/target_add_copperspice.cmake)
+		target_include_copperspice(TARGET ${target} COMPONENTS ${COPPERSPICE_LIBRARIES_REQUIRED})
+	else()
+		message(FATAL_ERROR "Option validation should have prevented getting here")
+	endif()
+endmacro()
+
+macro(target_link_qt_or_cs target)
+	if(INCLUDE_QT)
+		include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
+		target_link_qt(TARGET ${target} COMPONENTS ${QT_LIBRARIES_REQUIRED})
+	elseif(INCLUDE_COPPERSPICE)
+		include(${UTILOGENY_DIR}/cmake/target_add_copperspice.cmake)
+		target_link_copperspice(TARGET ${target} COMPONENTS ${COPPERSPICE_LIBRARIES_REQUIRED})
+	else()
+		message(FATAL_ERROR "Option validation should have prevented getting here")
+	endif()
+endmacro()
+
 target_config_compiler(AbstractorizerGUI)
 target_link_sdl2(AbstractorizerGUI)
-
-# Base Qt libraries required
-set(QT_LIBRARIES_REQUIRED Core Gui Widgets Network Gamepad Concurrent PrintSupport WinExtras)
 
 add_subdirectory(backends/generic)
 
@@ -100,21 +136,17 @@ endif()
 
 if(INCLUDE_LVGL)
 	add_compile_definitions(USE_LVGL)
-	
 	# waiting on resolution/workaround for MSVC compiler bug # 1380599
-	
 	#add_subdirectory(guis/lvgl)
 	#target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerLVGL)
 endif()
 
-if(INCLUDE_COPPERSPICE)
-	add_compile_definitions(USE_COPPERSPICE)
-	add_subdirectory(guis/copperspice)
-	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerCopperSpice)
+if(NOT TARGET UtilogenyCore)
+	add_subdirectory(${UTILOGENY_DIR} ${CMAKE_BINARY_DIR}/lib/Utilogeny)
 endif()
 
-target_link_qt(TARGET AbstractorizerGUI COMPONENTS ${QT_LIBRARIES_REQUIRED})
-target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerGeneric) # UtilogenyCore
+target_link_qt_or_cs(AbstractorizerGUI)
+target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerGeneric UtilogenyCore)
 
 # Copy WickedEngine shaders to build directory
 macro(deploy_resources target)	

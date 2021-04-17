@@ -12,7 +12,7 @@
 	url = https://github.com/OGRECave/ogre-next
 [submodule "lib/zauonlok_renderer"]
 	path = lib/zauonlok_renderer
-	url = https://github.com/zauonlok/renderer
+	url = https://github.com/efedo/renderer
 [submodule "lib/imgui"]
 	path = lib/imgui
 	url = https://github.com/ocornut/imgui

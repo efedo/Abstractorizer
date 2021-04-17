@@ -12,5 +12,4 @@ add_library(AbstractorizerGeneric
 )
 
 set_target_properties(AbstractorizerGeneric PROPERTIES LINKER_LANGUAGE CXX)
-
-target_include_qt(TARGET AbstractorizerGeneric COMPONENTS ${QT_LIBRARIES_REQUIRED})
+target_include_qt_or_cs(AbstractorizerGeneric)

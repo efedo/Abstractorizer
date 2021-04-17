@@ -83,3 +83,6 @@ On hold:
 Rejected:
 - QtQuick3D: no public C++ API
 - Urho3D: limited documentation, CMake build is a mess, project may be dead?
+- Flutter (desktop support currently in beta; Dart)
+	- https://codelabs.developers.google.com/codelabs/flutter-github-graphql-client/index.html#0
+- Avalonia (.Net/C#)

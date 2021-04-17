@@ -18,5 +18,5 @@ add_library(AbstractorizerTinyRenderer
 	lib/tgaimage.h
 	 "argb.h")
 
-target_include_qt(TARGET AbstractorizerTinyRenderer COMPONENTS ${QT_LIBRARIES_REQUIRED})
+target_include_qt_or_cs(AbstractorizerTinyRenderer)
 target_link_sdl2(AbstractorizerTinyRenderer)

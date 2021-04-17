@@ -8,8 +8,10 @@
 #include <mutex>
 #include "argb.h"
 
-class Model;
-class Shader;
+namespace TinyScene {
+	class Model;
+	class Shader;
+}
 
 class TinyRendererWidgetInternal : public SDLWidgetInternal
 {
@@ -20,8 +22,8 @@ public:
 	void render();
 private:
 	Uint64 start = 0;
-	Model * model = 0;
-	Shader * shader = 0;
+	TinyScene::Model * model = 0;
+	TinyScene::Shader * shader = 0;
 	SDL_Texture * texture = 0;
 	SDL_Surface * surface = 0;
 	std::thread renderthread;

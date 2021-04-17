@@ -8,7 +8,11 @@ class EngineWidget;
 
 class MainWindow : public QMainWindow
 {
+    #ifdef USE_QT
     Q_OBJECT
+    #else
+    CS_OBJECT(MainWindow)
+    #endif // USE_QT
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

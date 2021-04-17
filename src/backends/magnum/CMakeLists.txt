@@ -24,5 +24,5 @@ if(INCLUDE_SDL)
 	target_link_sdl2(AbstractorizerMagnum)
 endif()
 
-target_include_qt(TARGET AbstractorizerMagnum COMPONENTS ${QT_LIBRARIES_REQUIRED})
+target_include_qt_or_cs(AbstractorizerMagnum)
 target_include_magnum(TARGET AbstractorizerMagnum CORRADE_COMPONENTS "${CORRADE_LIBRARIES_REQUIRED}" MAGNUM_COMPONENTS "${MAGNUM_LIBRARIES_REQUIRED}")

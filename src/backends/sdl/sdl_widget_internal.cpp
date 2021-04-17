@@ -4,8 +4,11 @@
 #include <SDL.h>
 #include <SDL_syswm.h>
 #include "sdl_widget_internal.h"
+#include "Utilogeny/source/core/exceptions.h"
+#include "Utilogeny/source/core/platform.h"
 
 SDLWidgetInternal::SDLWidgetInternal() {
+
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_NoSystemBackground);
@@ -17,9 +20,7 @@ SDLWidgetInternal::SDLWidgetInternal() {
 
     printf("Creating SDL window\n");
 
-    //window = SDL_CreateWindowFrom(reinterpret_cast<void*>(winId()));
-    //if(window == NULL)
-    //    throw "Can't create window: " + std::string(SDL_GetError());
+    // CopperSpice throws if you create an SDL window
     sdlwindow = SDL_CreateWindow("SDL App",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         1280, 720, SDL_WINDOW_HIDDEN); // SDL_WINDOW_VULKAN
@@ -44,14 +45,24 @@ SDLWidgetInternal::SDLWidgetInternal() {
     SDL_SysWMinfo wmInfo;
     SDL_VERSION(&wmInfo.version);
     SDL_GetWindowWMInfo(sdlwindow, &wmInfo);
-    HWND native_window_id = wmInfo.info.win.window;
+
+    #ifdef OS_WINDOWS
+    auto native_window_id = wmInfo.info.win.window;
+    #elif OS_MACOS
+    auto native_window_id = wmInfo.info.cocoa.window;
+    #elif OS_LINUX
+    auto native_window_id = wmInfo.info.x11.window
+    #endif
+
     std::cout << "Native SDL window id: " << native_window_id << "\n";
 
     QWindow* qwindow = QWindow::fromWinId((WId)(native_window_id));
+    if (!qwindow) throwl("Failed to create QWindow from native SDL window");
     //window->setWindowState(Qt::WindowMinimized);
     ////window->showMinimized();
 
     qwindow->setFlags(Qt::FramelessWindowHint);
+
     QWidget* widget = QWidget::createWindowContainer(qwindow);
     //widget->setParent(this);
     //this->hide();
@@ -59,6 +70,33 @@ SDLWidgetInternal::SDLWidgetInternal() {
     this->setLayout(layout);
     layout->setMargin(0);
     layout->addWidget(widget);
+}
+
+void SDLWidgetInternal::initSDLvideo() {
+
+    std::cout << "Initializing \"sdl\".";
+    std::cout << "Available drivers:";
+    int num_drivers = SDL_GetNumVideoDrivers();
+    for (int i = 0; i < num_drivers; ++i) {
+        std::cout << "\t" << SDL_GetVideoDriver(i);
+    }
+
+    /* Initialize defaults and Video subsystem */
+    if (SDL_VideoInit(NULL) != 0) {
+        throwl("Unable to initialize SDL video");
+    }
+
+    SDL_version version;
+    SDL_GetVersion(&version);
+    std::cout << "Initialized with SDL "
+        << static_cast<int>(version.major) << '.'
+        << static_cast<int>(version.minor) << '.'
+        << static_cast<int>(version.patch)
+        << " (driver: " << SDL_GetCurrentVideoDriver() << ")";
+
+
+    // init window here
+    // init renderer
 }
 
 void SDLWidgetInternal::resizeEvent(QResizeEvent*) {

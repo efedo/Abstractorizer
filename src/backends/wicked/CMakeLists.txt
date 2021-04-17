@@ -31,5 +31,5 @@ add_library(AbstractorizerWicked
 # endif ()
 
 target_link_wicked(AbstractorizerWicked)
-target_include_qt(TARGET AbstractorizerWicked COMPONENTS ${QT_LIBRARIES_REQUIRED})
+target_include_qt_or_cs(AbstractorizerWicked)
 target_link_sdl2(AbstractorizerWicked)

@@ -19,6 +19,6 @@ add_library(AbstractorizerCopperSpice STATIC
 	copperspice.cpp
 )
 
-target_link_copperspice(TARGET AbstractorizerCopperSpice COMPONENTS "gui;opengl")
+target_link_copperspice(TARGET AbstractorizerCopperSpice COMPONENTS "${COPPERSPICE_LIBRARIES_REQUIRED}")
 #target_link_lvgl(AbstractorizerLVGL)
 #target_link_sdl2(AbstractorizerLVGL)
