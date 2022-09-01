@@ -1,6 +1,7 @@
 // (c) 2021 Eric Fedosejevs and contributors. Licensed under MIT license (see LICENSE for details)
 
 #include <thread>
+#include <iostream>
 
 //#include "ui_mainwindow.h"
 #include "mainwindow.h"
@@ -26,6 +27,10 @@
 
 #ifdef USE_TINY_RENDERER
 #include "backends/tinyrenderer/tinyrenderer_widget.h"
+#endif
+
+#ifdef USE_ZAUONLOK_RENDERER
+#include "backends/zauonlok/zauonlokrenderer_widget.h"
 #endif
 
 #ifdef USE_LVGL
@@ -67,6 +72,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     #ifdef USE_TINY_RENDERER
     _addWindowTab<TinyRendererWidget, true>("TinyRenderer");
+    #endif
+
+    #ifdef USE_ZAUONLOK_RENDERER
+    _addWindowTab<ZauonlokRendererWidget, true>("ZauonlokRenderer");
     #endif
 
     #ifdef USE_LVGL

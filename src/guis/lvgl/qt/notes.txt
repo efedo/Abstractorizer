@@ -1,1 +1,0 @@
-https://github.com/Ryzee119/lvgl-sdl

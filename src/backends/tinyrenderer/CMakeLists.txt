@@ -16,7 +16,7 @@ add_library(AbstractorizerTinyRenderer
 	lib/our_gl.h
 	lib/tgaimage.cpp
 	lib/tgaimage.h
-	 "argb.h")
+	argb.h)
 
 target_include_qt_or_cs(AbstractorizerTinyRenderer)
 target_link_sdl2(AbstractorizerTinyRenderer)

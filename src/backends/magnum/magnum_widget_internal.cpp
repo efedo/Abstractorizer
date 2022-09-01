@@ -11,10 +11,7 @@ int MagnumWidgetInternal::dummyarg = 0;
 MagnumWidgetInternal::MagnumWidgetInternal() 
     : Magnum::Platform::Sdl2Application({ dummyarg, (char**)(nullptr) }) 
 {
-    //Magnum::Platform::Sdl2Application::Arguments args = { dummyarg, (char**)(nullptr) };
-    //magnumApp = new Magnum::Platform::Sdl2Application(args);
-
-    SDL_Window* sdlwindow = this->Magnum::Platform::Sdl2Application::window();// this->Magnum::Platform::Sdl2Application::window();
+    SDL_Window* sdlwindow = this->Magnum::Platform::Sdl2Application::window();
     uint32_t sdl_window_id = SDL_GetWindowID(sdlwindow);
 
     SDL_SysWMinfo wmInfo;

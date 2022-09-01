@@ -10,12 +10,10 @@ option(INCLUDE_QT "Include Qt" ON)
 option(INCLUDE_COPPERSPICE "Include CopperSpice" OFF)
 option(INCLUDE_QT3D "Include Qt3D" ON)
 option(INCLUDE_SDL "Include SDL" ON)
-option(INCLUDE_MAGNUM "Include Magnum engine" OFF)
+option(INCLUDE_MAGNUM "Include Magnum engine" ON)
 option(INCLUDE_WICKED "Include WickedEngine" OFF) # Currently disabled, WickedEngine does not compile
-option(INCLUDE_OGRE "Include OGRE (classic)" ON)
-option(INCLUDE_OGRE_NEXT "Include OGRE-next" ON)
 option(INCLUDE_TINY_RENDERER "Include tinyrenderer" ON)
-option(INCLUDE_LVGL "Include LVGL gui library" ON)
+option(INCLUDE_ZAUONLOK_RENDERER "Include zauonlok renderer" ON)
 
 # Check option validity and setup qt/copperspice
 if (INCLUDE_QT AND INCLUDE_COPPERSPICE)
@@ -44,7 +42,8 @@ add_executable(AbstractorizerGUI
 	main.cpp
 	mainwindow.h
 	mainwindow.cpp
- "platforms.h")
+	platforms.h
+ )
 
 set_target_properties(AbstractorizerGUI PROPERTIES
             CXX_STANDARD ${OVERRIDE_CXX_STANDARD}
@@ -116,22 +115,18 @@ if(INCLUDE_WICKED)
 	target_copy_wicked_shaders(AbstractorizerGUI)
 endif()
 
-if(INCLUDE_OGRE)
-	add_compile_definitions(USE_OGRE)
-	add_subdirectory(backends/ogre)
-	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerOgre)
-endif()
-
-if(INCLUDE_OGRE_NEXT)
-	add_compile_definitions(USE_OGRE_NEXT)
-	add_subdirectory(backends/ogre-next)
-	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerOgreNext)
-endif()
-
 if(INCLUDE_TINY_RENDERER)
 	add_compile_definitions(USE_TINY_RENDERER)
 	add_subdirectory(backends/tinyrenderer)
 	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerTinyRenderer)
+endif()
+
+if(INCLUDE_ZAUONLOK_RENDERER)
+#	add_subdirectory(../lib/zauonlok_renderer ${CMAKE_BINARY_DIR}/lib/zauonlok_renderer)
+	add_compile_definitions(USE_ZAUONLOK_RENDERER)
+	add_subdirectory(backends/zauonlok)
+	target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerZauonlokRenderer)
+	#target_link_libraries(AbstractorizerGUI PUBLIC ZauonlokViewer)
 endif()
 
 if(INCLUDE_LVGL)
@@ -143,6 +138,8 @@ endif()
 
 if(NOT TARGET UtilogenyCore)
 	add_subdirectory(${UTILOGENY_DIR} ${CMAKE_BINARY_DIR}/lib/Utilogeny)
+else()
+	message("UtilogenyCore target somehow already defined?")
 endif()
 
 target_link_qt_or_cs(AbstractorizerGUI)
