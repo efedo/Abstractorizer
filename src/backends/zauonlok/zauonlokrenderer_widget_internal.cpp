@@ -15,6 +15,9 @@ extern "C" {
 ZauonlokRendererWidgetInternal::ZauonlokRendererWidgetInternal() {
 
     blahblahblah();
+
+    uint64_t WindowID;
+
     zauonlokmain(0, 0);
 
     //auto ApplicationProcess = new QProcess();

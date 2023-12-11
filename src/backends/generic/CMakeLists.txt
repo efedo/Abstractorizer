@@ -11,5 +11,13 @@ add_library(AbstractorizerGeneric
 	engine_features.h
 )
 
+set_target_properties(AbstractorizerGeneric PROPERTIES
+    CXX_STANDARD 17
+    CXX_EXTENSIONS OFF
+)
+
 set_target_properties(AbstractorizerGeneric PROPERTIES LINKER_LANGUAGE CXX)
+
+target_compile_options(AbstractorizerGeneric PUBLIC "/Zc:__cplusplus")
+
 target_include_qt_or_cs(AbstractorizerGeneric)

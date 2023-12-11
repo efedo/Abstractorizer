@@ -10,6 +10,13 @@ add_library(AbstractorizerSDL
 	sdl_utils.h 
 	sdl_utils.cpp)
 
+set_target_properties(AbstractorizerSDL PROPERTIES
+        CXX_STANDARD 17
+        CXX_EXTENSIONS OFF
+        )
+
+target_compile_options(AbstractorizerSDL PUBLIC "/Zc:__cplusplus")
+
 target_include_qt_or_cs(AbstractorizerSDL)
 target_link_sdl2(AbstractorizerSDL)
 target_config_compiler(AbstractorizerSDL)

@@ -5,12 +5,13 @@ cmake_minimum_required(VERSION 3.14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(FIND_HINTS_COPPERSPICE "C:/CopperSpice/cmake/CopperSpice")
+list(APPEND CMAKE_PREFIX_PATH "D:/Qt/6.5.2/msvc2019_64")
 option(PRINT_INCLUDE_TARGET_DIRS "Debug info for package targets/includes" OFF)
 option(INCLUDE_QT "Include Qt" ON)
 option(INCLUDE_COPPERSPICE "Include CopperSpice" OFF)
-option(INCLUDE_QT3D "Include Qt3D" ON)
+option(INCLUDE_QT3D "Include Qt3D" OFF)
 option(INCLUDE_SDL "Include SDL" ON)
-option(INCLUDE_MAGNUM "Include Magnum engine" ON)
+option(INCLUDE_MAGNUM "Include Magnum engine" OFF)
 option(INCLUDE_WICKED "Include WickedEngine" OFF) # Currently disabled, WickedEngine does not compile
 option(INCLUDE_TINY_RENDERER "Include tinyrenderer" ON)
 option(INCLUDE_ZAUONLOK_RENDERER "Include zauonlok renderer" ON)
@@ -19,12 +20,12 @@ option(INCLUDE_ZAUONLOK_RENDERER "Include zauonlok renderer" ON)
 if (INCLUDE_QT AND INCLUDE_COPPERSPICE)
 	message(FATAL_ERROR "Cannot simultaneously include both Qt and Copperspice due to conflicting namespaces")
 elseif(NOT INCLUDE_QT AND NOT INCLUDE_COPPERSPICE)
-	message(FATAL_ERROR "Must include either Qt and Copperspice as window manager")
+	message(FATAL_ERROR "Must include either Qt or Copperspice as window manager")
 elseif(NOT INCLUDE_QT AND INCLUDE_QT3D)
 	message(FATAL_ERROR "Cannot include Qt3D without also including Qt")
 elseif(INCLUDE_QT)
 	add_compile_definitions(USE_QT)
-	set(QT_LIBRARIES_REQUIRED Core Gui Widgets Network Gamepad Concurrent PrintSupport WinExtras)
+	set(QT_LIBRARIES_REQUIRED Core Gui Widgets Network Concurrent) # Gamepad WinExtras PrintSupport
 	include(${UTILOGENY_DIR}/cmake/target_add_qt.cmake)
 elseif(INCLUDE_COPPERSPICE)
 	add_compile_definitions(USE_COPPERSPICE)
@@ -46,7 +47,7 @@ add_executable(AbstractorizerGUI
  )
 
 set_target_properties(AbstractorizerGUI PROPERTIES
-            CXX_STANDARD ${OVERRIDE_CXX_STANDARD}
+            CXX_STANDARD 17
             CXX_EXTENSIONS OFF
             )
 
@@ -136,14 +137,14 @@ if(INCLUDE_LVGL)
 	#target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerLVGL)
 endif()
 
-if(NOT TARGET UtilogenyCore)
-	add_subdirectory(${UTILOGENY_DIR} ${CMAKE_BINARY_DIR}/lib/Utilogeny)
-else()
-	message("UtilogenyCore target somehow already defined?")
-endif()
+#if(NOT TARGET UtilogenyCore)
+#	add_subdirectory(${UTILOGENY_DIR} ${CMAKE_BINARY_DIR}/lib/Utilogeny)
+#else()
+#	message("UtilogenyCore target somehow already defined?")
+#endif()
 
 target_link_qt_or_cs(AbstractorizerGUI)
-target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerGeneric UtilogenyCore)
+target_link_libraries(AbstractorizerGUI PUBLIC AbstractorizerGeneric) # UtilogenyCore
 
 # Copy WickedEngine shaders to build directory
 macro(deploy_resources target)	

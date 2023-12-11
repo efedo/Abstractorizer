@@ -18,6 +18,14 @@ add_library(AbstractorizerWicked
 	#main_Windows.h
 )
 
+set_target_properties(AbstractorizerWicked PROPERTIES
+    CXX_STANDARD 17
+    CXX_EXTENSIONS OFF
+)
+
+target_compile_options(AbstractorizerWicked PUBLIC "/Zc:__cplusplus")
+
+
 # if (WIN32)
 	# target_link_libraries(AbstractorizerWicked PUBLIC 
 		# WickedEngine_Windows

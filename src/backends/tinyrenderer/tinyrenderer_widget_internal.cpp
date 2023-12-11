@@ -57,14 +57,7 @@ void TinyRendererWidgetInternal::render() {
         setupView();
         std::fill(((uint32_t*)(surface->pixels)), ((uint32_t*)(surface->pixels)) + width * height, 0);
 
-        for (int i = 0; i < model->nfaces(); i++) { // for every triangle
-            TinyScene::vec4 clip_vert[3]; // triangle coordinates (clip coordinates), written by VS, read by FS
-            for (int j = 0; j < 3; j++) {
-                clip_vert[j] = shader->vertex(i, j); // call the vertex shader for each triangle vertex
-            }
-            triangle(clip_vert, *shader, surface, width, height, zbuffer); // actual rasterization routine call
-        }
-
+        // make shitty grid
         for (int j = 0; j < height; ++j) {
             for (int i = 0; i < width; ++i) {
                 if (i == 50) {
@@ -87,6 +80,15 @@ void TinyRendererWidgetInternal::render() {
                 }
             }
         }
+
+        for (int i = 0; i < model->nfaces(); i++) { // for every triangle
+            TinyScene::vec4 clip_vert[3]; // triangle coordinates (clip coordinates), written by VS, read by FS
+            for (int j = 0; j < 3; j++) {
+                clip_vert[j] = shader->vertex(i, j); // call the vertex shader for each triangle vertex
+            }
+            triangle(clip_vert, *shader, surface, width, height, zbuffer); // actual rasterization routine call
+        }
+
         std::cout << "Tiny renderer produced frame\n";
         //if (texture) {
         //    SDL_DestroyTexture(texture);

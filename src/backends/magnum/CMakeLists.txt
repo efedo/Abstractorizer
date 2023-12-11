@@ -20,6 +20,13 @@ add_library(AbstractorizerMagnum
 	${AbstractorizerMagnum_SOURCES}
 )
 
+set_target_properties(AbstractorizerMagnum PROPERTIES
+    CXX_STANDARD 17
+    CXX_EXTENSIONS OFF
+)
+
+target_compile_options(AbstractorizerMagnum PUBLIC "/Zc:__cplusplus")
+
 if(INCLUDE_SDL)
 	target_link_sdl2(AbstractorizerMagnum)
 endif()

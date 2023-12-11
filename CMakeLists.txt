@@ -2,6 +2,9 @@
 
 cmake_minimum_required(VERSION 3.15)
 
+set(CMAKE_CXX_STANDARD 17)
+set(OVERRIDE_CXX_STANDARD 17)
+
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../Utilogeny/CMakeLists.txt")
 	set(UTILOGENY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Utilogeny" CACHE STRING "Path to Utilogeny")
 else()

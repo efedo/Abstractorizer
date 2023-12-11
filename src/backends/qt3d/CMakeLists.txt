@@ -16,6 +16,13 @@ add_library(AbstractorizerQt3D
     qt3d_widget.h 
     qt3d_widget_internal.cpp
 	qt3d_widget_internal.h
-	)
+)
+
+set_target_properties(AbstractorizerQt3D PROPERTIES
+    CXX_STANDARD 17
+    CXX_EXTENSIONS OFF
+)
+
+target_compile_options(AbstractorizerQt3D PUBLIC "/Zc:__cplusplus")
 
 target_include_qt(TARGET AbstractorizerQt3D COMPONENTS ${QT_LIBRARIES_REQUIRED})

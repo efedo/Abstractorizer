@@ -55,7 +55,9 @@ namespace TinyScene {
                 if (discard) continue;
                 zbuffer[x + y * w] = frag_depth;
 
-                ((uint32_t*)(image->pixels))[x + y * w] = SDL_MapRGB(image->format, color[2], color[1], color[0]);
+                //((uint32_t*)(image->pixels))[x + y * w] = SDL_MapRGB(image->format, color[2], color[1], color[0]);
+                // renders 'upside down': flip while rendering
+                ((uint32_t*)(image->pixels))[x + (h - y - 1) * w] = SDL_MapRGB(image->format, color[2], color[1], color[0]);
             }
         }
     }
